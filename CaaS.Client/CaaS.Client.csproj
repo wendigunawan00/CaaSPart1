@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="EnterpriseLibrary.ExceptionHandling.Logging" Version="6.0.1304" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+	<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CaaS.Dal.Ado\CaaS.Dal.Ado.csproj" />
+    <ProjectReference Include="..\CaaS.Dal.Interfaces\CaaS.Dal.Interfaces.csproj" />
+    <ProjectReference Include="..\CaaS.Domain\CaaS.Domain.csproj" />
+    <ProjectReference Include="..\Dal.Common\Dal.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Update="appsettings.json">
+	<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+
+</Project>
