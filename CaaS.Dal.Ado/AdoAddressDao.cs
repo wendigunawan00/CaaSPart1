@@ -15,8 +15,8 @@ public class AdoAddressDao : IAddressDao
 
     public AdoAddressDao(IConnectionFactory connectionFactory)
     {
-        this.template = new AdoTemplate(connectionFactory);
-
+        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
+       //this.template = new AdoTemplate(connectionFactory);
     }
 
     public async Task<IEnumerable<Address>> FindAllAsync(string table)

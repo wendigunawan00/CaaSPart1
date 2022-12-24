@@ -13,7 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaaS.Dal.Interfaces", "CaaS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaaS.Client", "CaaS.Client\CaaS.Client.csproj", "{E3D16C05-1279-4847-8063-BD1573500876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaaSTests.UnitTest1", "CaaSTests.UnitTest1\CaaSTests.UnitTest1.csproj", "{4430FD3E-3069-4B1C-BD26-8CA1192246BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaaSTests.UnitTest1", "CaaSTests.UnitTest1\CaaSTests.UnitTest1.csproj", "{4430FD3E-3069-4B1C-BD26-8CA1192246BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaaS.Api", "CaaS.Api\CaaS.Api.csproj", "{174A979F-AF6E-4F5B-9C14-1BDAE92ADCFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9E4DCD68-34F1-46A7-B48E-B8963B80B538}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +52,10 @@ Global
 		{4430FD3E-3069-4B1C-BD26-8CA1192246BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4430FD3E-3069-4B1C-BD26-8CA1192246BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4430FD3E-3069-4B1C-BD26-8CA1192246BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174A979F-AF6E-4F5B-9C14-1BDAE92ADCFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174A979F-AF6E-4F5B-9C14-1BDAE92ADCFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174A979F-AF6E-4F5B-9C14-1BDAE92ADCFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174A979F-AF6E-4F5B-9C14-1BDAE92ADCFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

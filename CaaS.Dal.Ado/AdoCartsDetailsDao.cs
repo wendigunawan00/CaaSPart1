@@ -15,7 +15,9 @@ public class AdoCartDetailsDao : ICartDetailsDao
 
     public AdoCartDetailsDao(IConnectionFactory connectionFactory)
     {
-        this.template = new AdoTemplate(connectionFactory);
+        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
+
+        //this.template = new AdoTemplate(connectionFactory);
         this.cartDao = new AdoCartDao(connectionFactory);
         this.productDao = new AdoProductDao(connectionFactory);
     }

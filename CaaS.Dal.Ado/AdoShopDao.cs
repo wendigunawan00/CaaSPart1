@@ -14,7 +14,8 @@ public class AdoShopDao : IShopDao
 
     public AdoShopDao(IConnectionFactory connectionFactory)
     {
-        this.template = new AdoTemplate(connectionFactory);
+        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
+        //this.template = new AdoTemplate(connectionFactory);
     }
 
     public async Task<IEnumerable<Shop>> FindAllAsync(string table)

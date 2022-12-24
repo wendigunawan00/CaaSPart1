@@ -3,28 +3,22 @@
 using CaaS.Dal.Interface;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
-
-
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace CaaS.Dal.Ado;
 
 public class AdoPersonDao : IPersonDao
 {
     private readonly AdoTemplate template;
-    private readonly AdoAddressDao addressDao;
-
-    private bool IsAddressByIdSync(string addressId, string addresstable)
-    {
-        return template.QuerySingleSync($"select * from {addresstable} where address_id=@id",
-           MapRowToAddress,
-           new QueryParameter("@id", addressId)) is not null;
-    }
 
     public AdoPersonDao(IConnectionFactory connectionFactory)
-    {
-        this.template = new AdoTemplate(connectionFactory);
-        this.addressDao = new AdoAddressDao(connectionFactory); 
+    {        
+        template = Util.createAdoTemplate(connectionFactory)?? throw new ArgumentNullException(nameof(connectionFactory));
+        // not recommended
+        //this.template = new AdoTemplate(connectionFactory);
     }
+    
 
     public async Task<IEnumerable<Person>> FindAllAsync(string table)
     {
