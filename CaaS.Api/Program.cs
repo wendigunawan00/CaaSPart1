@@ -27,8 +27,9 @@
 
 
 using CaaS.Dal.Ado;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
+using CaaS.Logic;
 //using CaaS.Api.BackgroundServices;
 using Dal.Common;
 
@@ -40,8 +41,8 @@ builder.Services
     .AddControllers()
     .AddNewtonsoftJson()
     .AddXmlDataContractSerializerFormatters();
-builder.Services.AddScoped<IPersonDao>(_ =>  
-    new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection"))
+builder.Services.AddScoped<IOrderManagementLogic<Person>>(_ =>  
+    new OrderManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CustomersShop1")
 );
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddCors(

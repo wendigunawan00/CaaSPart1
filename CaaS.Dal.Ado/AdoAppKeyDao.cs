@@ -1,22 +1,15 @@
 ﻿using Dal.Common;
-//using Microsoft.Data.SqlClient;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
-using Org.BouncyCastle.Asn1.X509;
-using System;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoAppKeyDao : IAppKeyDao
+public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
 {
-    private readonly AdoTemplate template;
 
-
-    public AdoAppKeyDao(IConnectionFactory connectionFactory)
-    {
-        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
-        //this.template = new AdoTemplate(connectionFactory);
+    public AdoAppKeyDao(IConnectionFactory connectionFactory): base(connectionFactory)
+    {        
     }
 
     public async Task<IEnumerable<AppKey>> FindAllAsync(string table)

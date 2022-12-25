@@ -1,26 +1,17 @@
 ﻿  using Dal.Common;
-//using Microsoft.Data.SqlClient;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
-using Org.BouncyCastle.Asn1.X509;
 using System.Text.RegularExpressions;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoCartDao : ICartDao
+public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
 {
-    private readonly AdoTemplate template;
-    private readonly AdoPersonDao personDao;
+    private readonly IBaseDao<Person> personDao;
 
 
-    public AdoCartDao(IConnectionFactory connectionFactory)
-    {
-        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
-
-        //this.template = new AdoTemplate(connectionFactory);
-        this.personDao = new AdoPersonDao(connectionFactory);
-    }
+    public AdoCartDao(IConnectionFactory connectionFactory) : base(connectionFactory) => this.personDao = new AdoPersonDao(connectionFactory);
 
     public async Task<IEnumerable<Cart>> FindAllAsync(string table)
     {

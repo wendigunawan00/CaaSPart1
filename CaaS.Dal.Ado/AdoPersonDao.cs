@@ -1,28 +1,26 @@
 ﻿  using Dal.Common;
 //using Microsoft.Data.SqlClient;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
+
 
 namespace CaaS.Dal.Ado;
 
-public class AdoPersonDao : IPersonDao
+public class AdoPersonDao : AdoBaseDao, IBaseDao<Person>
 {
-    private readonly AdoTemplate template;
+   // private readonly AdoTemplate template;
 
-    public AdoPersonDao(IConnectionFactory connectionFactory)
-    {        
-        template = Util.createAdoTemplate(connectionFactory)?? throw new ArgumentNullException(nameof(connectionFactory));
-        // not recommended
-        //this.template = new AdoTemplate(connectionFactory);
+    public AdoPersonDao(IConnectionFactory connectionFactory) : base(connectionFactory)
+    {     
+       // not recommended
+       //this.template = new AdoTemplate(connectionFactory);
     }
     
 
     public async Task<IEnumerable<Person>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToPerson);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToPerson);
     }
 
     public async Task<Person?> FindByIdAsync(string id,string table)

@@ -1,22 +1,15 @@
 ﻿using Dal.Common;
 using CaaS.Domain;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using static CaaS.Dal.Ado.AdoMapDao;
-using System;
-using Org.BouncyCastle.Asn1.X509;
-using System.Text.RegularExpressions;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoAddressDao : IAddressDao
+public class AdoAddressDao : AdoBaseDao, IBaseDao<Address>
 {
-    private readonly AdoTemplate template;
 
-
-    public AdoAddressDao(IConnectionFactory connectionFactory)
-    {
-        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
-       //this.template = new AdoTemplate(connectionFactory);
+    public AdoAddressDao(IConnectionFactory connectionFactory):base(connectionFactory)
+    {      
     }
 
     public async Task<IEnumerable<Address>> FindAllAsync(string table)

@@ -1,13 +1,5 @@
-﻿using CaaS.Dal.Interface;
+﻿using CaaS.Dal.Interfaces;
 using CaaS.Domain;
-using Microsoft.Data.SqlClient;
-using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
-using Org.BouncyCastle.Crypto.Encodings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace CaaS.Client;
@@ -17,12 +9,12 @@ internal class DalProductTester
     
 
     // null prüfen
-    private readonly IProductDao ProductDao;
+    private readonly IBaseDao<Product> ProductDao;
     private readonly string table ="ProductShop1";
     private readonly string id1="arz-1";
     private readonly string id2="arz-2";
 
-    public DalProductTester(IProductDao ProductDao)
+    public DalProductTester(IBaseDao<Product> ProductDao)
     {
         this.ProductDao = ProductDao;
     }

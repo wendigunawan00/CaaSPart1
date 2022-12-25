@@ -1,10 +1,5 @@
-﻿using CaaS.Dal.Interface;
+﻿using CaaS.Dal.Interfaces;
 using CaaS.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace CaaS.Client;
@@ -12,10 +7,10 @@ namespace CaaS.Client;
 internal class DalPersonTester
 {
     // null prüfen
-    private readonly IPersonDao personDao;
+    private readonly IBaseDao<Person> personDao;
     private readonly string table ="Mandants";
 
-    public DalPersonTester(IPersonDao personDao)
+    public DalPersonTester(IBaseDao<Person> personDao)
     {
         this.personDao = personDao;
     }

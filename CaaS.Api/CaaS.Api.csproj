@@ -21,8 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CaaS.Dal.Ado\CaaS.Dal.Ado.csproj" />
-    <ProjectReference Include="..\CaaS.Domain\CaaS.Domain.csproj" />
+    <ProjectReference Include="..\CaaS.OrderManagementLogic\CaaS.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <PropertyGroup>

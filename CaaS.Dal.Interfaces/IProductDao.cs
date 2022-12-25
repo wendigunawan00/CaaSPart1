@@ -1,8 +1,8 @@
 ﻿using CaaS.Domain;
 
-namespace CaaS.Dal.Interface;
+namespace CaaS.Dal.Interfaces;
 
-public interface IProductDao
+public interface IProductDao 
 {
     Task<IEnumerable<Product>> FindAllAsync(string table);
     Task<Product?> FindByIdAsync(string id, string table);

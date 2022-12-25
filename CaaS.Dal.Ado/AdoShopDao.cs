@@ -1,21 +1,17 @@
 ﻿  using Dal.Common;
 //using Microsoft.Data.SqlClient;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
 
 
 namespace CaaS.Dal.Ado;
 
-public class AdoShopDao : IShopDao
+public class AdoShopDao : AdoBaseDao,IBaseDao<Shop>
 {
-    private readonly AdoTemplate template;
-    
-
-    public AdoShopDao(IConnectionFactory connectionFactory)
+    public AdoShopDao(IConnectionFactory connectionFactory): base(connectionFactory)
     {
-        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
-        //this.template = new AdoTemplate(connectionFactory);
+        
     }
 
     public async Task<IEnumerable<Shop>> FindAllAsync(string table)

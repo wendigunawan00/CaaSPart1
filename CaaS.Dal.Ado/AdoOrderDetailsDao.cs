@@ -1,6 +1,6 @@
 ﻿  using Dal.Common;
 //using Microsoft.Data.SqlClient;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
 using Org.BouncyCastle.Asn1.X509;
@@ -8,14 +8,14 @@ using System.Text.RegularExpressions;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoOrderDetailsDao : IOrderDetailsDao
+public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
 {
     private readonly AdoTemplate template;
    
     
-    public AdoOrderDetailsDao(IConnectionFactory connectionFactory)
+    public AdoOrderDetailsDao(IConnectionFactory connectionFactory): base(connectionFactory)
     {
-        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
+       // template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
         //this.template = new AdoTemplate(connectionFactory);        
     }
 

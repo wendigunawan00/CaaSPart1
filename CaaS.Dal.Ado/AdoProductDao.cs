@@ -1,6 +1,6 @@
 ﻿  using Dal.Common;
 //using Microsoft.Data.SqlClient;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using System.Data;
 using static CaaS.Dal.Ado.AdoMapDao;
@@ -8,21 +8,11 @@ using System;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoProductDao : IProductDao
+public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
 {
-    private readonly AdoTemplate template;
-
-    private Product? FindByIdSync(string id, string table)
-    {
-        return template.QuerySingleSync($"select * from {table} where product_id=@id",
-            MapRowToProduct,
-            new QueryParameter("@id", id));
-    }
-        
-    public AdoProductDao(IConnectionFactory connectionFactory)
-    {
-        template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
-        //this.template = new AdoTemplate(connectionFactory);
+            
+    public AdoProductDao(IConnectionFactory connectionFactory) : base(connectionFactory)
+    {       
     }
 
     public async Task<IEnumerable<Product>> FindAllAsync(string table)

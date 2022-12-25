@@ -1,13 +1,6 @@
-﻿using CaaS.Dal.Interface;
+﻿using CaaS.Dal.Interfaces;
 using CaaS.Domain;
-using Org.BouncyCastle.Crypto.Encodings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace CaaS.Client;
 
@@ -16,12 +9,12 @@ internal class DalShopTester
     
 
     // null prüfen
-    private readonly IShopDao shopDao;
+    private readonly IBaseDao<Shop> shopDao;
     private readonly string table ="Shops";
     private readonly string id1="shop-1";
     private readonly string id2="shop-2";
 
-    public DalShopTester(IShopDao shopDao)
+    public DalShopTester(IBaseDao<Shop> shopDao)
     {
         this.shopDao = shopDao;
     }

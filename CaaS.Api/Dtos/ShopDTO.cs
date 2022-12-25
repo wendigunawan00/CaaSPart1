@@ -10,5 +10,5 @@ public class ShopDTO
     public string AppKey { get;  set; }
 
     public override string ToString() =>
-      $"Shop(id:{Id}, name:{Name}, mandant:{MandantId})";
+      $"Shop(id:{Id}, name:{Name}, mandant:{MandantId}),appKey:{AppKey}";
 }
