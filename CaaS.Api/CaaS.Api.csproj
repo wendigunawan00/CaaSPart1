@@ -24,10 +24,6 @@
     <ProjectReference Include="..\CaaS.OrderManagementLogic\CaaS.Logic.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
   <PropertyGroup>
 	<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
