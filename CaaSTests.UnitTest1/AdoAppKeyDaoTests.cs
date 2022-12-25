@@ -1,5 +1,5 @@
 ﻿using CaaS.Dal.Ado;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using Dal.Common;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +9,7 @@ namespace CaaSTests.UnitTest1
 {
     public class AdoAppKeyDaoTests
     {
-        private IAppKeyDao _appKeyDao;
+        private IBaseDao<AppKey> _appKeyDao;
         private readonly string _table = "AppKeys";
 
 

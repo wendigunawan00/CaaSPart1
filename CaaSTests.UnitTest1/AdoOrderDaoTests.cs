@@ -1,5 +1,5 @@
 using CaaS.Dal.Ado;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using Dal.Common;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ namespace CaaSTests.UnitTest1
     [TestFixture]
     public class AdoOrderDaoTests    {
         
-        private IOrderDao _orderDao;
+        private IBaseDao<Order> _orderDao;
         private string _table = "OrdersShop1";
 
 

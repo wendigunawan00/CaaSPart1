@@ -1,18 +1,15 @@
 using CaaS.Dal.Ado;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using Dal.Common;
 using Microsoft.Extensions.Configuration;
-using MySqlX.XDevAPI.Relational;
-using System;
-using System.Configuration;
 
 namespace CaaSTests.UnitTest1
 {
     [TestFixture]
     public class AdoCartDetailsTests    {
         
-        private ICartDetailsDao _cartdetailsDao;
+        private IBaseDao<CartDetails> _cartdetailsDao;
         private string _table = "CartsDetailsShop1";
 
 

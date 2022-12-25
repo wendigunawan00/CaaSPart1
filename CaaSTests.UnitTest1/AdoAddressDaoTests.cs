@@ -1,5 +1,5 @@
 using CaaS.Dal.Ado;
-using CaaS.Dal.Interface;
+using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using Dal.Common;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +12,7 @@ namespace CaaSTests.UnitTest1
     public class AdoAddressDaoTests
     {
 
-        private IAddressDao _AddressDao;
+        private IBaseDao<Address> _AddressDao;
 
         private string _table = "AddressesShops";
 
