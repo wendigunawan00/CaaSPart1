@@ -2,6 +2,14 @@
 
 public class Product
 {
+    public Product(string name, double price, string amountDesc, string productDesc, string downloadLink)
+    {       
+        this.Name = name;
+        this.Price = price;
+        this.AmountDesc = amountDesc;
+        this.ProductDesc = productDesc;
+        this.DownloadLink = downloadLink;
+    }
 
     public Product(string id, string name, double price, string amountDesc, string productDesc, string downloadLink)
     {

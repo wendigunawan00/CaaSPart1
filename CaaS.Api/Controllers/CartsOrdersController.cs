@@ -12,14 +12,14 @@ namespace CaaS.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(WebApiConventions))]
-    public class CustomersController : ControllerBase
+    public class CartsOrdersController : ControllerBase
     {
         private readonly IOrderManagementLogic<Person  > logic;
         private readonly IMapper mapper;
         //private readonly UpdateChannel updateChannel;
 
         //public CustomersController( IMapper mapper, UpdateChannel updateChannel, string table)
-        public CustomersController(IOrderManagementLogic<Person> logic, IMapper mapper)
+        public CartsOrdersController(IOrderManagementLogic<Person> logic, IMapper mapper)
         {           
             this.logic = logic ?? throw new ArgumentNullException(nameof(logic));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

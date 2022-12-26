@@ -8,6 +8,6 @@ public class CustomerProfile : Profile
 	{
 		CreateMap<Domain.Person, Dtos.PersonDTO>();
 		//CreateMap<Dtos.CustomerForCreationDto, Domain.Customer>();
-  //      CreateMap<Dtos.CustomerForUpdateDto, Domain.Customer>();
+        //CreateMap<Dtos.CustomerForUpdateDto, Domain.Customer>();
     }
 }

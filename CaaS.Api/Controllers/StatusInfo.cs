@@ -14,6 +14,16 @@ public static class StatusInfo
     {
         Title = "Invalid customer ID",
         Detail = $"Customer with ID '{customerId}' does not exist"
+    }; 
+    public static ProblemDetails InvalidProductId(String productId) => new ProblemDetails
+    {
+        Title = "Invalid product ID",
+        Detail = $"Product with ID '{productId}' does not exist"
+    };
+    public static ProblemDetails InvalidProductNameOrDescription(String nameOrDescription) => new ProblemDetails
+    {
+        Title = "Invalid product name",
+        Detail = $"Product with a name or description '{nameOrDescription}' does not exist"
     };
 
     public static ProblemDetails OrderAlreadyExists(String orderId) => new ProblemDetails

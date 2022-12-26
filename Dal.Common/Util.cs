@@ -1,4 +1,6 @@
-﻿namespace Dal.Common
+﻿using System.Text.RegularExpressions;
+
+namespace Dal.Common
 {
     public static  class Util
     {
@@ -16,6 +18,26 @@
             connectionFactory
             };
             return Activator.CreateInstance(classType, constructorParameters) as AdoTemplate;
+        }
+
+        public static string createID(string lastID = "prod-1", int count =1)
+        {
+            //Method 1
+            //Regex regex = new Regex("-");  // Split on hyphens.
+            //string[] substrings = regex.Split(lastID);
+            //string str = "";
+            //for (int i = 0; i < substrings.Length - 1; i++) 
+            //{
+            //    str = str + substrings[i];
+            //}
+            //str += (Int32.Parse(substrings[substrings.Length]) + 1).ToString();
+
+            //Method 2
+            string matches = Regex.Match(lastID, @"(?<![A-z\d])+\d+").Value;
+            int matchPos = Regex.Match(lastID, @"(?<![A-z\d])+\d+").Index;
+
+            return lastID.Substring(0,matchPos) + (count + 1).ToString();
+           
         }
     }
 }

@@ -40,7 +40,10 @@ builder.Services
     .AddControllers()
     .AddNewtonsoftJson()
     .AddXmlDataContractSerializerFormatters();
-builder.Services.AddScoped<IOrderManagementLogic<Person>>(_ =>  
+builder.Services.AddScoped<IOrderManagementLogic<Product>>(_ =>  
+    new OrderManagementLogic<Product>(new AdoProductDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "ProductShop1")
+);
+builder.Services.AddScoped<IOrderManagementLogic<Person>>(_ =>
     new OrderManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CustomersShop1")
 );
 builder.Services.AddAutoMapper(typeof(Program));
