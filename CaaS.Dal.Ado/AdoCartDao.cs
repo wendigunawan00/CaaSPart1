@@ -15,12 +15,12 @@ public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
 
     public async Task<IEnumerable<Cart>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToCart);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToCart);
     }
 
     public async Task<Cart?> FindByIdAsync(string id,string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where cart_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where cart_id=@id",
             MapRowToCart,
             new QueryParameter("@id", id));
     }
@@ -32,7 +32,7 @@ public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
         {
             string sqlcmd = $"update {table} set cust_id=@custId, status=@status where cart_id=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", cart.Id),
                 new QueryParameter("@custId", cart.CustId),
                 new QueryParameter("@status", cart.Status)
@@ -47,7 +47,7 @@ public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
         if (c is not null)
         {
             string sqlcmd = $"delete from {table} where cart_id=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -59,7 +59,8 @@ public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
         string[] substrings = Regex.Split(table, "Carts");
         string customershoptable = "Customers" + substrings[substrings.Length - 1];
         Person? cust = await personDao.FindByIdAsync(cart.CustId, customershoptable);
-        await personDao.StoreAsync(cust, customershoptable);
+        //if (cust is not null)
+        //    await personDao.StoreAsync(cust, customershoptable);
 
         if (c is null )
         {
@@ -67,7 +68,7 @@ public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
             {
                 string sqlcmd = $"insert into {table} (cart_id,cust_id, status) " +
                "values (@id,@custId, @status) ";
-                return await template.ExecuteAsync(@sqlcmd,
+                return await base.template.ExecuteAsync(@sqlcmd,
                     new QueryParameter("@id", cart.Id),
                     new QueryParameter("@custId", cart.CustId),
                     new QueryParameter("@status", cart.Status)

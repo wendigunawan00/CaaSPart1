@@ -14,12 +14,12 @@ public class AdoAddressDao : AdoBaseDao, IBaseDao<Address>
 
     public async Task<IEnumerable<Address>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToAddress);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToAddress);
     }
 
     public async Task<Address?> FindByIdAsync(string id, string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where address_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where address_id=@id",
             MapRowToAddress,
             new QueryParameter("@id", id));
     }
@@ -32,7 +32,7 @@ public class AdoAddressDao : AdoBaseDao, IBaseDao<Address>
         {
             string sqlcmd = $"update {table} set street=@street, floor=@floor, postal_code=@postal_code, city=@city, province=@province,country=@country where address_id=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", address.Id),
                 new QueryParameter("@street", address.Street),
                 new QueryParameter("@floor", address.Floor),
@@ -51,7 +51,7 @@ public class AdoAddressDao : AdoBaseDao, IBaseDao<Address>
         if (addr is not null)
         {
             string sqlcmd = $"delete from {table} where address_id=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -66,7 +66,7 @@ public class AdoAddressDao : AdoBaseDao, IBaseDao<Address>
             string sqlcmd = $"insert into {table} ( address_id,street, floor, postal_code, city, province, country ) " +
             "values (@id,@street, @floor,@postal_code,@city,@province,@country) ";
 
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", address.Id),
                 new QueryParameter("@street", address.Street),
                 new QueryParameter("@floor", address.Floor),

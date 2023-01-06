@@ -16,12 +16,12 @@ public class AdoShopDao : AdoBaseDao,IBaseDao<Shop>
 
     public async Task<IEnumerable<Shop>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToShop);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToShop);
     }
 
     public async Task<Shop?> FindByIdAsync(string id, string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where shop_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where shop_id=@id",
             MapRowToShop,
             new QueryParameter("@id", id));        
 
@@ -34,7 +34,7 @@ public class AdoShopDao : AdoBaseDao,IBaseDao<Shop>
         {
             string sqlcmd = $"update {table} set shop_name=@name, field_descriptions=@fieldDesc, mandant_id=@mandantId , app_key=@appKey where shop_id=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", shop.Id),
                 new QueryParameter("@name", shop.Name),
                 new QueryParameter("@fieldDesc", shop.FieldDesc),
@@ -51,7 +51,7 @@ public class AdoShopDao : AdoBaseDao,IBaseDao<Shop>
         if (s is not null)
         {
             string sqlcmd = $"delete from {table} where shop_id=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -66,7 +66,7 @@ public class AdoShopDao : AdoBaseDao,IBaseDao<Shop>
             "values (@id,@name, @fieldDesc,@mandantId,@address,@appKey) ";            
             
 
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
             new QueryParameter("@id", shop.Id),
             new QueryParameter("@name", shop.Name),
             new QueryParameter("@fieldDesc", shop.FieldDesc),

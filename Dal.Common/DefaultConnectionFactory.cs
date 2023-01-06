@@ -12,7 +12,6 @@ public class DefaultConnectionFactory : IConnectionFactory
 
     public static IConnectionFactory FromConfiguration(IConfiguration config, string connectionStringConfigName)
     {
-
         var connectionConfig = config.GetSection("ConnectionStrings").GetSection(connectionStringConfigName);
         string connectionString = connectionConfig["ConnectionString"];
         string providerName = connectionConfig["ProviderName"];

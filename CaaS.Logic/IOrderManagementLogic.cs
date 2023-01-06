@@ -1,30 +1,21 @@
-﻿using CaaS.Domain;
+﻿using AutoMapper;
+using CaaS.DTO;
 
-namespace CaaS.Logic;
-
-public interface IOrderManagementLogic<T>
+namespace CaaS.Logic
 {
-    Task<IEnumerable<T>> Get();
-    Task<T?> Search(string id);
-    Task<bool> Add(T obj);
-    Task<bool> Update(T obj);
-    Task<bool> Delete(string id);
-    
-    //Task<IEnumerable<Customer>> GetCustomersByRating(Rating rating);
-    //Task<bool> CustomerExists(Guid customerId);
-    //Task<Customer?> GetCustomer(Guid customerId);
-    //Task AddCustomer(Customer customer);
-    //Task<bool> DeleteCustomer(Guid customerId);
-    //Task UpdateCustomer(Customer customer);
+    public interface IOrderManagementLogic 
+    {
+        public void setMapper(IMapper mapper);
 
-    //Task<IEnumerable<Order>> GetOrdersOfCustomer(Guid customerId);
-    //Task<bool> OrderExists(Guid order);
-    //Task<Order> GetOrder(Guid orderId);
-    //Task AddOrderForCustomer(Guid customerId, Order order);
-    //Task UpdateOrder(Order order);
-    //Task<bool> DeleteOrder(Guid orderId);
+        public Task<IEnumerable<CartDTO>> ShowOpenCart();
+        public Task<IEnumerable<CartDTO>> ShowOpenCartByCustomerID(string customerId);
+        public Task<IEnumerable<CartDetailsDTO?>> ShowOpenCartDetailsByProductId(string openCartId, string productId);
+        public Task<IEnumerable<CartDetailsDTO?>> ShowOpenCartDetailsByCartId(string openCartId);
+        public Task<CartDTO> CreateCart(string customerId);
 
-    //Task<decimal> UpdateTotalRevenue(Guid customerId);
-    //Task UpdateTotalRevenues();
+        public Task<CartDetailsDTO> CreateCartDetails(string openCartId, string productId, double quantity);
+        public Task<CartDetailsDTO> UpdateCartDetails(CartDetailsDTO openCartDetails);
+        public Task<OrderDetailsDTO> CreateOrder(CartDTO openCart, CartDetailsDTO openCartDetails, double discount);      
 
+    }
 }

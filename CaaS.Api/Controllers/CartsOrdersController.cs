@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using CaaS.Dal.Interfaces;
-using CaaS.Dtos;
+using CaaS.DTO;
 using Microsoft.AspNetCore.Mvc;
-//using CaaS.Api.BackgroundServices;
-using Dal.Common;
 using CaaS.Logic;
-using CaaS.Domain;
+using CaaS.Features;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CaaS.Api.Controllers
 {
@@ -14,139 +13,93 @@ namespace CaaS.Api.Controllers
     [ApiConventionType(typeof(WebApiConventions))]
     public class CartsOrdersController : ControllerBase
     {
-        private readonly IOrderManagementLogic<Person  > logic;
-        private readonly IMapper mapper;
-        //private readonly UpdateChannel updateChannel;
+        private readonly IOrderManagementLogic orderMgtLogic;
+        private IMapper mapper;
 
-        //public CustomersController( IMapper mapper, UpdateChannel updateChannel, string table)
-        public CartsOrdersController(IOrderManagementLogic<Person> logic, IMapper mapper)
-        {           
-            this.logic = logic ?? throw new ArgumentNullException(nameof(logic));
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            //this.updateChannel = updateChannel ?? throw new ArgumentNullException(nameof(updateChannel));
+
+        public CartsOrdersController(IOrderManagementLogic orderManagementLogicInstance,IMapper mapper)
+        {
+            this.orderMgtLogic = orderManagementLogicInstance;
+            orderMgtLogic.setMapper(mapper ?? throw new ArgumentNullException(nameof(mapper)));
+            this.mapper = mapper;
         }
 
-        //[ProducesDefaultResponseType]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        // so könnte direkt die Methode vorgegeben werden
-        //[ApiConventionMethod(typeof(WebApiConventions), nameof(WebApiConventions.Get))]
+        
+        /// <summary>
+        /// Returns all open carts all customers.
+        /// <returns> all carts with open status</returns>
         [HttpGet]
-        public async Task<IEnumerable<Person>> GetPersons()
+        [Authorize]
+        public async Task<IEnumerable<CartDTO>> ShowOpenCart()
         {
-            var Persons = await logic.Get();
-            //if (rating is null)
-            //{
-            //    customers = await logic.FindAllAsync();
-            //}
-            //else
-            //{
-            //    customers = await logic.FindAllAsyncByRating(rating.Value);
-            //}
-            //return customers.Select(c => c.ToDto());
-            //return mapper.Map<IEnumerable<PersonDTO>>(customers);
-            return mapper.Map<IEnumerable<Person>>(Persons);
+            return await orderMgtLogic.ShowOpenCart();
         }
 
         /// <summary>
-        /// Returns a customer by id.
+        /// Returns a Cart Object
         /// </summary>
-        /// <param name="customerId">The customer id</param>
-        /// <returns>The customer with the given id</returns>
-        //[ProducesDefaultResponseType]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[HttpGet("{customerId}")]
-        //public async Task<ActionResult<PersonDTO>> GetCustomerById([FromRoute] Guid customerId)
-        //{
-        //    var customer = await logic.GetCustomer(customerId);
-        //    if (customer is null)
-        //    {
-        //        return NotFound(StatusInfo.InvalidCustomerId(customerId));
-        //    }
-        //    //return Ok(customer.ToDto());
-        //    return mapper.Map<PersonDTO>(customer);
-        //}
+        /// <returns>an open cart of a customer</returns>
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ActionResult<CartDTO>> CreateOrUpdateCart(string customerId, string productId, double quantity)
+        {
+            var cart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
+            
+            if (cart.IsNullOrEmpty())
+            {
+                await orderMgtLogic.CreateCart(customerId);
+                var newCart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
+                await orderMgtLogic.CreateCartDetails((newCart).ToArray().ElementAt(0).Id, productId, quantity);
+                return mapper.Map<CartDTO>((newCart).ToArray().ElementAt(0));
 
-        ////[ProducesDefaultResponseType]
-        ////[ProducesResponseType(StatusCodes.Status201Created)]
-        ////[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        ////[ProducesResponseType(StatusCodes.Status409Conflict)]
-        //[HttpPost]
-        //public async Task<ActionResult<PersonDTO>> CreateCustomer([FromBody] CustomerForCreationDto PersonDTO)
-        //{
-        //    if (PersonDTO.Id != Guid.Empty && await logic.CustomerExists(PersonDTO.Id))
-        //    {
-        //        return Conflict();
-        //    }
-        //    //Domain.Customer customer = PersonDTO.ToDomain();
-        //    Domain.Customer customer = mapper.Map<Domain.Customer>(PersonDTO);
-        //    await logic.AddCustomer(customer);
-        //    return CreatedAtAction(actionName: nameof(GetCustomerById),
-        //        routeValues: new { customerId = customer.Id },
-        //        //value: customer.ToDto()
-        //        value: mapper.Map<PersonDTO>(customer)
-        //        );
-        //}
+            }
+            else //updating
+            {
+                var openCart = (cart).ToArray().ElementAt(0);
+                var cartDetails = await orderMgtLogic.ShowOpenCartDetailsByProductId(openCart.Id, productId);
+                var openCartDetails = (cartDetails).ToArray().ElementAt(0);
 
-        ////[ProducesDefaultResponseType]
-        ////[ProducesResponseType(StatusCodes.Status204NoContent)]
-        ////[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        ////[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[HttpPut("{customerId}")]
-        //public async Task<ActionResult<PersonDTO>> UpdateCustomer(
-        //    Guid customerId,
-        //    [FromBody] CustomerForUpdateDto PersonDTO)
-        //{
-        //    Domain.Customer? customer = await logic.GetCustomer(customerId);
-        //    if (customer is null)
-        //    {
-        //        return NotFound();
-        //    }
+                if (cartDetails.IsNullOrEmpty())
+                {
+                    openCartDetails!.Quantity = quantity;
+                    await orderMgtLogic.UpdateCartDetails(openCartDetails);
+                }
+                else
+                {
+                    await orderMgtLogic.CreateCartDetails(openCartDetails.Id, productId, quantity);
+                }
+                 return mapper.Map<CartDTO>(openCartDetails);
+            }
+        }
 
-        //    mapper.Map(PersonDTO, customer);
+        /// <summary>
+        /// Returns an OrderDetailsObject
+        /// </summary>
+        /// <returns>create an order out of an open cart of a customer</returns>
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ActionResult<OrderDetailsDTO?>> CreateOrder(string customerId, double discount)
+        {
+            var openCart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
+           
+            if (!openCart.IsNullOrEmpty())
+            {
+            var openCartDetails = (await orderMgtLogic.ShowOpenCartDetailsByCartId((openCart).ToArray().ElementAt(0).Id));
+                for (int i = 0; i < openCartDetails.Count(); i++)
+                {
+                    CartDetailsDTO? openCartDetails1 = openCartDetails!.ToArray().ElementAt(i);
+                    var ok = await orderMgtLogic.CreateOrder((openCart).ToArray().ElementAt(0), openCartDetails1, discount);
+                    if (i == openCartDetails.Count()-1)
+                    {
+                        return Ok(ok);
+                    }
+                }
+            }            
+            return NotFound(StatusInfo.InvalidOrderId((openCart).ToArray().ElementAt(0).Id.Replace("cart", "or")));
+            
+        }
 
-        //    await logic.UpdateCustomer(customer);
-        //    return NoContent();
-        //}
+        
 
-        ////[ProducesDefaultResponseType]
-        ////[ProducesResponseType(StatusCodes.Status204NoContent)]
-        ////[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        ////[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[HttpDelete("{customerId}")]
-        //public async Task<ActionResult> DeleteCustomer([FromRoute] Guid customerId)
-        //{
-        //    if (await logic.DeleteCustomer(customerId))
-        //    {
-        //        return NoContent();
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
-        //}
-
-        //[ProducesDefaultResponseType]
-        //[ProducesResponseType(StatusCodes.Status202Accepted)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status429TooManyRequests)]
-        //[HttpPost("{customerId}/update-totals")]
-        //public async Task<ActionResult> UpdateCustomerTotals([FromRoute] Guid customerId)
-        //{
-        //    if (!await logic.CustomerExists(customerId))
-        //    {
-        //        return NotFound(StatusInfo.InvalidCustomerId(customerId));
-        //    }
-
-        //    //await logic.UpdateTotalRevenue(customerId);
-        //    //return NoContent();
-
-        //    if (await updateChannel.AddUpdateTaskAsync(customerId))
-        //    {
-        //        return Accepted();
-        //    }
-        //    return new StatusCodeResult(StatusCodes.Status429TooManyRequests);
-        //}
     }
 }

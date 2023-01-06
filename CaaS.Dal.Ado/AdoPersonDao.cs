@@ -25,7 +25,7 @@ public class AdoPersonDao : AdoBaseDao, IBaseDao<Person>
 
     public async Task<Person?> FindByIdAsync(string id,string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where person_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where person_id=@id",
             MapRowToPerson,
             new QueryParameter("@id", id));
     }
@@ -37,7 +37,7 @@ public class AdoPersonDao : AdoBaseDao, IBaseDao<Person>
         {
             string sqlcmd = $"update {table} set first_name=@fn, last_name=@ln, dob=@dob where person_id=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", person.Id),
                 new QueryParameter("@fn", person.FirstName),
                 new QueryParameter("@ln", person.LastName),
@@ -52,7 +52,7 @@ public class AdoPersonDao : AdoBaseDao, IBaseDao<Person>
         if (p is not null)        
         {
             string sqlcmd = $"delete from {table} where person_id=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -70,7 +70,7 @@ public class AdoPersonDao : AdoBaseDao, IBaseDao<Person>
             //await addressDao.StoreAsync(addr, addresstable);
 
 
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", person.Id),
                 new QueryParameter("@fn", person.FirstName),
                 new QueryParameter("@ln", person.LastName),

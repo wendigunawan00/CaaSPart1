@@ -10,9 +10,7 @@ namespace CaaS.Dal.Ado;
 
 public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
 {
-    private readonly AdoTemplate template;
-   
-    
+       
     public AdoOrderDetailsDao(IConnectionFactory connectionFactory): base(connectionFactory)
     {
        // template = Util.createAdoTemplate(connectionFactory) ?? throw new ArgumentNullException(nameof(connectionFactory));
@@ -21,14 +19,14 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
 
     public async Task<IEnumerable<OrderDetails>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToOrderDetails);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToOrderDetails);
     }
 
     public async Task<OrderDetails?> FindByIdAsync(string id,string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where order_details_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where order_details_id=@id",
             MapRowToOrderDetails,
-            new QueryParameter("@id", id));
+            new QueryParameter("@id", id))??null;
     }
    
     public async Task<bool> UpdateAsync(OrderDetails orderdetails,string table)
@@ -40,7 +38,7 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
             string sqlcmd = $"update {table} set order_id=@orderId, product_id=@productId,unit_price=@unitPrice," +
                 $"qty=@quantity, discount=@discount where order_details_id=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", orderdetails.Id),
                 new QueryParameter("@orderId", orderdetails.OrderId),
                 new QueryParameter("@productId", orderdetails.ProductId),
@@ -59,7 +57,7 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
         if (o is not null)
         {
             string sqlcmd = $"delete from {table} where order_details_id=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -82,7 +80,7 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
             //await productDao.StoreAsync(prod, productshoptable);
 
 
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", orderdetails.Id),
                 new QueryParameter("@orderId", orderdetails.OrderId),
                 new QueryParameter("@productId", orderdetails.ProductId),

@@ -20,6 +20,11 @@ public static class StatusInfo
         Title = "Invalid product ID",
         Detail = $"Product with ID '{productId}' does not exist"
     };
+    public static ProblemDetails InvalidCartId(String cartId) => new ProblemDetails
+    {
+        Title = "Invalid cart ID",
+        Detail = $"Cart with ID '{cartId}' does not exist"
+    };
     public static ProblemDetails InvalidProductNameOrDescription(String nameOrDescription) => new ProblemDetails
     {
         Title = "Invalid product name",
@@ -38,4 +43,6 @@ public static class StatusInfo
         Title = "Invalid order ID",
         Detail = $"Order with ID '{orderId}' does not exist"
     };
+    
+    
 }

@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CaaS.Dal.Ado\CaaS.Dal.Ado.csproj" />
-    <ProjectReference Include="..\CaaS.Dal.Interfaces\CaaS.Dal.Interfaces.csproj" />
     <ProjectReference Include="..\CaaS.Domain\CaaS.Domain.csproj" />
     <ProjectReference Include="..\CaaS.DTO\CaaS.DTO.csproj" />
+    <ProjectReference Include="..\CaaS.Logic\CaaS.Logic.csproj" />
+    <ProjectReference Include="..\Dal.Common\Dal.Common.csproj" />
   </ItemGroup>
 
 </Project>

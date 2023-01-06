@@ -6,7 +6,7 @@ public class CartProfile : Profile
 {
 	public CartProfile()
 	{
-		CreateMap<Domain.Cart, Dtos.CartDTO>();		
-		CreateMap<Dtos.CartDTO, Domain.Cart>();		
+		CreateMap<Domain.Cart, DTO.CartDTO>();	
+		CreateMap<DTO.CartDTO, Domain.Cart>();		
     }
 }

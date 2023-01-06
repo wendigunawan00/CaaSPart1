@@ -14,6 +14,16 @@ public class OrderDetails
         Discount = discount;        
     }
 
+    public OrderDetails(OrderDetails secondOrder)
+    {
+        Id = secondOrder.Id;
+        OrderId = secondOrder.OrderId;
+        ProductId = secondOrder.ProductId;
+        UnitPrice = secondOrder.UnitPrice;
+        Quantity = secondOrder.Quantity;
+        Discount = secondOrder.Discount;
+    }
+
     public string Id { get; set; }
     public string OrderId { get; private set; }
     public string ProductId { get; private set; }

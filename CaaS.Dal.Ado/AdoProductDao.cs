@@ -17,12 +17,12 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
 
     public async Task<IEnumerable<Product>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToProduct);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToProduct);
     }
 
     public async Task<Product?> FindByIdAsync(string id,string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where product_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where product_id=@id",
             MapRowToProduct,
             new QueryParameter("@id", id));
     }
@@ -36,7 +36,7 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
             string sqlcmd = $"update {table} set product_name=@name, price = @price," +
             $"amount_desc=@amountDesc, product_desc=@productDesc,download_link=@downloadLink  where product_id=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", product.Id),
                 new QueryParameter("@name", product.Name),
                 new QueryParameter("@price", product.Price),
@@ -55,7 +55,7 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
         if (p is not null)
         {
             string sqlcmd = $"delete from {table} where product_id=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -70,7 +70,7 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
             string sqlcmd = $"insert into {table} (product_id,product_name, price, amount_desc, product_desc, download_link ) " +
            "values (@id,@name, @price,@amountDesc,@productDesc,@downloadLink) ";
 
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", product.Id),
                 new QueryParameter("@name", product.Name),
                 new QueryParameter("@price", product.Price),

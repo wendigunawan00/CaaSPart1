@@ -1,4 +1,4 @@
-﻿namespace CaaS.Dtos;
+﻿namespace CaaS.DTO;
 
 public class ShopDTO
 {

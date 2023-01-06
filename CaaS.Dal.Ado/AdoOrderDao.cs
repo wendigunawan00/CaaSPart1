@@ -14,12 +14,12 @@ public class AdoOrderDao : AdoBaseDao,IBaseDao<Order>
 
     public async Task<IEnumerable<Order>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToOrder);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToOrder);
     }
 
     public async Task<Order?> FindByIdAsync(string id,string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where order_id=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where order_id=@id",
             MapRowToOrder,
             new QueryParameter("@id", id));
     }

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using CaaS.Dal.Interfaces;
-using CaaS.Dtos;
+using CaaS.DTO;
 using Microsoft.AspNetCore.Mvc;
 //using CaaS.Api.BackgroundServices;
 using Dal.Common;
 using CaaS.Logic;
 using CaaS.Domain;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CaaS.Api.Controllers
 {
@@ -15,12 +14,12 @@ namespace CaaS.Api.Controllers
     [ApiConventionType(typeof(WebApiConventions))]
     public class ProductsController : ControllerBase
     {
-        private readonly IOrderManagementLogic<Product> logic;
+        private readonly IManagementLogic<Product> logic;
         private readonly IMapper mapper;
         //private readonly UpdateChannel updateChannel;
 
         //public ProductsController( IMapper mapper, UpdateChannel updateChannel, string table)
-        public ProductsController(IOrderManagementLogic<Product> logic, IMapper mapper)
+        public ProductsController(IManagementLogic<Product> logic, IMapper mapper)
         {           
             this.logic = logic ?? throw new ArgumentNullException(nameof(logic));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -81,6 +80,7 @@ namespace CaaS.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ProductDTO>> CreateProduct([FromBody] ProductForCreationDTO productDTO)
         {         
             Domain.Product product = mapper.Map<Domain.Product>(productDTO);
@@ -97,6 +97,7 @@ namespace CaaS.Api.Controllers
 
 
         [HttpPut("{productId}")]
+        [Authorize]
         public async Task<ActionResult<ProductDTO>> UpdateProduct(String productId,[FromBody] ProductForCreationDTO productDTO)
         {
             Domain.Product? product = (Product?) await logic.Search(productId);
@@ -112,6 +113,7 @@ namespace CaaS.Api.Controllers
 
 
         [HttpDelete("{productId}")]
+        [Authorize]
         public async Task<ActionResult> DeleteProduct([FromRoute] String productId)
         {
             if (await logic.Delete(productId))

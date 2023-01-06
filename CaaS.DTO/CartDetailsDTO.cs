@@ -1,4 +1,4 @@
-﻿namespace CaaS.Dtos;
+﻿namespace CaaS.DTO;
 
 public class CartDetailsDTO
 {
@@ -8,5 +8,5 @@ public class CartDetailsDTO
     public double Quantity { get; set; }
 
     public override string ToString() =>
-      $"Cart(id:{Id}, CartId:{CartId}, Status:{ProductId})";
+      $"Cart(Status:{ProductId}, Quantity:{Quantity})";
 }

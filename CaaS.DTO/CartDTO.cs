@@ -1,8 +1,8 @@
-﻿namespace CaaS.Dtos;
+﻿namespace CaaS.DTO;
 
 public class CartDTO
 {
-    public string Id { get; private set; }
+    public string Id { get; set; }
     public string CustId { get; set; }
     public string Status { get; set; }
 

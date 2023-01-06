@@ -6,7 +6,7 @@ public class CustomerProfile : Profile
 {
 	public CustomerProfile()
 	{
-		CreateMap<Domain.Person, Dtos.PersonDTO>();
+		CreateMap<Domain.Person, DTO.PersonDTO>();
 		//CreateMap<Dtos.CustomerForCreationDto, Domain.Customer>();
         //CreateMap<Dtos.CustomerForUpdateDto, Domain.Customer>();
     }

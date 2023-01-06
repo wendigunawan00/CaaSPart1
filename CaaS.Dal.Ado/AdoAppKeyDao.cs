@@ -14,12 +14,12 @@ public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
 
     public async Task<IEnumerable<AppKey>> FindAllAsync(string table)
     {
-        return await template.QueryAsync($"select * from {table}", MapRowToAppKey);
+        return await base.template.QueryAsync($"select * from {table}", MapRowToAppKey);
     }
 
     public async Task<AppKey?> FindByIdAsync(string id, string table)
     {
-        return await template.QuerySingleAsync($"select * from {table} where app_key=@id",
+        return await base.template.QuerySingleAsync($"select * from {table} where app_key=@id",
             MapRowToAppKey,
             new QueryParameter("@id", id));
     }
@@ -32,7 +32,7 @@ public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
             string sqlcmd = $"update {table} set app_key_name=@appKeyName, app_key_password =@appKeyPassword" +
                 $" where app_key=@id";
             // array für die Parameter erstellen
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", appKey.Id),
                 new QueryParameter("@appKeyName", appKey.AppKeyName), 
                 new QueryParameter("@appKeyPassword", appKey.AppKeyPassword)
@@ -48,7 +48,7 @@ public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
         if (apk is not null)
         {
             string sqlcmd = $"delete from {table} where app_key=@id";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                    new QueryParameter("@id", id)) == 1;
         }
         return false;
@@ -62,7 +62,7 @@ public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
             
             string sqlcmd = $"insert into {table} (app_key,app_key_name,app_key_password) " +
                 $"values (@id,@appKeyName,@appKeyPassword)";
-            return await template.ExecuteAsync(@sqlcmd,
+            return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", appKey.Id),
                 new QueryParameter("@appKeyName", appKey.AppKeyName),
                 new QueryParameter("@appKeyPassword", appKey.AppKeyPassword)
