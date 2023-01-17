@@ -10,6 +10,7 @@ namespace CaaS.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [ApiConventionType(typeof(WebApiConventions))]
     public class InfoController : ControllerBase
     {
         private IAnalytic _analytic;
@@ -50,10 +51,10 @@ namespace CaaS.Api.Controllers
         } 
         
         /// <summary>
-        /// Returns total revenue within a certain time frame.
+        /// Returns all carts within a certain start date.
         /// </summary>
         /// <param name="startDate">start date</param>
-        /// <returns>Get total revenue within a certain time frame</returns>      
+        /// <returns>Get total carts open or closed with a certain start date</returns>      
         [HttpGet("{startDate}")]        
         public async Task<CartsStatsDTO> GetAllOpenAndClosedCart(DateTime startDate)
         {

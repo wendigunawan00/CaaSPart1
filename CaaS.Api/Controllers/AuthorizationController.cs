@@ -9,6 +9,7 @@ namespace CaaS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiConventionType(typeof(WebApiConventions))]
     public class AuthorizationController : ControllerBase
     {
         private IAuth _auth;

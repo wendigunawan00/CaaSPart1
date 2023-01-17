@@ -72,6 +72,10 @@ namespace CaaS.Api.Controllers
             return mapper.Map<ProductDTO>(prod);
         }
 
+        /// <summary>
+        /// Returns a list of products
+        /// </summary>
+        /// <returns>a list of products</returns>
         [HttpGet]
         public async Task<IEnumerable<ProductDTO>> GetProducts()
         {
@@ -79,6 +83,9 @@ namespace CaaS.Api.Controllers
             return mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
+        /// <summary>
+        /// Returns a created product with the id after creating a product
+        /// </summary>
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<ProductDTO>> CreateProduct([FromBody] ProductForCreationDTO productDTO)
@@ -95,7 +102,9 @@ namespace CaaS.Api.Controllers
                 );
         }
 
-
+        /// <summary>
+        /// Update a product with the product id given and show it back if success updating
+        /// </summary>
         [HttpPut("{productId}")]
         [Authorize]
         public async Task<ActionResult<ProductDTO>> UpdateProduct(String productId,[FromBody] ProductForCreationDTO productDTO)
@@ -112,6 +121,9 @@ namespace CaaS.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Delete a product with the product-id given
+        /// </summary>
         [HttpDelete("{productId}")]
         [Authorize]
         public async Task<ActionResult> DeleteProduct([FromRoute] String productId)
