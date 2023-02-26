@@ -13,7 +13,6 @@ public class Cart
     public string CustId { get; set; }
     public string Status { get; set; }
 
-
     public override string ToString() =>
       $"Cart(id:{Id}, CustId:{CustId}, Status:{Status})";
 }

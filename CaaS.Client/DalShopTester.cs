@@ -11,8 +11,8 @@ internal class DalShopTester
     // null prüfen
     private readonly IBaseDao<Shop> shopDao;
     private readonly string table ="Shops";
-    private readonly string id1="shop-1";
-    private readonly string id2="shop-2";
+    private readonly string id1="sh1";
+    private readonly string id2="sh2";
 
     public DalShopTester(IBaseDao<Shop> shopDao)
     {
@@ -66,7 +66,7 @@ internal class DalShopTester
         Console.WriteLine($"Deleting: ");
         await shopDao.DeleteByIdAsync(id1, table);
         await shopDao.DeleteByIdAsync(shop.Id, table);
-        await shopDao.DeleteByIdAsync("shop-3", table);
+        await shopDao.DeleteByIdAsync("sh3", table);
 
         Console.WriteLine($"after delete: ");
         (await shopDao.FindAllAsync(table))
@@ -76,13 +76,13 @@ internal class DalShopTester
 
     public async Task TestStoreAsync()
     {
-        Shop? shop = new Shop("shop-1", "LoveRead", "books", "mandant-1", "addr-sh1","ak-s1");
+        Shop? shop = new Shop("sh1", "LoveRead", "books", "addr-sh1");
         await shopDao.StoreAsync(shop, table);
         Console.WriteLine($"before update: Shop -> {shop?.ToString() ?? "<null>"}");
-        shop = new Shop("shop-2", "DrugLinz", "Medicaments", "mandant-2", "addr-sh2","ak-s2");
+        shop = new Shop("sh2", "DrugLinz", "medicaments", "addr-sh2");
         await shopDao.StoreAsync(shop, table);
 
-        shop = new Shop("shop-3","ScienceBooks", "Books mostly about science", "mandant-3", "addr-sh3","ak-s3");        
+        shop = new Shop("sh3","ScienceBooks", "Books mostly about science", "addr-sh3");        
         await shopDao.StoreAsync(shop, table);
         Console.WriteLine($"after update: ");
         (await shopDao.FindAllAsync(table))

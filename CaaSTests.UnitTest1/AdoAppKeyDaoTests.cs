@@ -25,13 +25,14 @@ namespace CaaSTests.UnitTest1
         public async Task TestFindAllAsync()
         {
             List<AppKey> appKeyList = (await _appKeyDao.FindAllAsync(_table)).ToList();
+            Console.WriteLine(appKeyList);
             Assert.True( appKeyList.Count <=2&& appKeyList.Count >0);
         }
 
         [Test]
         public async Task TestFindByIdAsync()
         {
-            AppKey? appKey1 = await _appKeyDao.FindByIdAsync("ak-s1", _table);
+            AppKey? appKey1 = await _appKeyDao.FindByIdAsync("ak-sh1", _table);
             Assert.IsNotNull(appKey1);
 
         }
@@ -39,11 +40,11 @@ namespace CaaSTests.UnitTest1
         [Test]
         public async Task TestUpdateAsync()
         {
-            AppKey? appKey = await _appKeyDao.FindByIdAsync("ak-s2", _table);
+            AppKey? appKey = await _appKeyDao.FindByIdAsync("ak-sh2", _table);
             Assert.That(appKey.AppKeyName == "jungle");
-            appKey= new AppKey("ak-s2", "jingle","np");
+            appKey= new AppKey("ak-sh2", "jingle","np","sh2");
             await _appKeyDao.UpdateAsync(appKey, _table);
-            AppKey? appKey2 = await _appKeyDao.FindByIdAsync("ak-s2", _table);
+            AppKey? appKey2 = await _appKeyDao.FindByIdAsync("ak-sh2", _table);
             Assert.That(appKey2.AppKeyName == "jingle");
             appKey2.AppKeyName = "jungle";
             await _appKeyDao.UpdateAsync(appKey2, _table);
@@ -64,7 +65,7 @@ namespace CaaSTests.UnitTest1
         {
             AppKey? appKey = await _appKeyDao.FindByIdAsync("ak-s2", _table);
             Assert.IsNull(appKey);
-            appKey = new AppKey("ak-s2", "jungle","np");
+            appKey = new AppKey("ak-s2", "jungle","np","sh2");
             await _appKeyDao.StoreAsync(appKey, _table);
             AppKey? appKey2 = await _appKeyDao.FindByIdAsync("ak-s2", _table);
             Assert.True(appKey2.AppKeyName == "jungle");

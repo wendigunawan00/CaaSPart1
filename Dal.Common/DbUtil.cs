@@ -11,4 +11,17 @@ public static class DbUtil
     // DbProviderFactories.RegisterFactory("System.Data.SqlClient", System.Data.SqlClient.SqlClientFactory.Instance);
     DbProviderFactories.RegisterFactory("MySql.Data.MySqlClient", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
   }
+
+  public static T ConvertFromDBVal<T>(object obj)
+  {
+    if (obj == null || obj == DBNull.Value)
+    {
+        return default(T); // returns the default value for the type
+    }
+    else
+    {
+        return (T)obj;
+    }
+  }
+
 }

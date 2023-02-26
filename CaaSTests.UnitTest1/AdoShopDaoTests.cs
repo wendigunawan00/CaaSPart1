@@ -12,7 +12,7 @@ namespace CaaSTests.UnitTest1
     [TestFixture]
     public class AdoShopDaoTests    {
         
-        private IBaseDao<Shop> _shopDao;
+        private IBaseDao<Shop> _shopDao;        
         private string _table = "Shops";
 
 
@@ -28,13 +28,13 @@ namespace CaaSTests.UnitTest1
         public async Task TestFindAllAsync()
         {
             List<Shop> ShopList = (await _shopDao.FindAllAsync(_table)).ToList();
-            Assert.True( ShopList.Count<=2 && ShopList.Count>0);
+            Assert.True( ShopList.Count<=3 && ShopList.Count>0);
         }
 
         [Test]
         public async Task TestFindByIdAsync()
         {
-            Shop? shop1 = await _shopDao.FindByIdAsync("shop-1", _table);
+            Shop? shop1 = await _shopDao.FindByIdAsync("sh1", _table);
             Assert.IsNotNull(shop1);
 
         }
@@ -42,13 +42,15 @@ namespace CaaSTests.UnitTest1
         [Test] 
         public async Task TestUpdateAsync()
         {                        
-            Shop? shop = await _shopDao.FindByIdAsync("shop-1", _table);
+            Shop? shop = await _shopDao.FindByIdAsync("sh1", _table);
             Assert.That(shop.Name== "LoveRead");
             shop.Name = "MedStorDrug";
-            Assert.That(shop.Name== "MedStorDrug");
             await _shopDao.UpdateAsync(shop, _table);
+            shop = await _shopDao.FindByIdAsync("sh1", _table);
+            Assert.That(shop.Name== "MedStorDrug");
             shop.Name = "LoveRead";
             await _shopDao.UpdateAsync(shop, _table);
+            shop= await _shopDao.FindByIdAsync("sh1", _table);
             Assert.That(shop.Name == "LoveRead");
 
         }
@@ -56,10 +58,10 @@ namespace CaaSTests.UnitTest1
         [Test]
         public async Task TestDeleteByIdAsync()
         {
-            Shop? shop = await _shopDao.FindByIdAsync("shop-5", _table);
+            Shop? shop = await _shopDao.FindByIdAsync("sh5", _table);
             Assert.IsNull(shop);
-            await _shopDao.DeleteByIdAsync("shop-5", _table);
-            Shop? shop2 = await _shopDao.FindByIdAsync("shop-5", _table);
+            await _shopDao.DeleteByIdAsync("sh5", _table);
+            Shop? shop2 = await _shopDao.FindByIdAsync("sh5", _table);
             Assert.IsNull(shop2);
         }
 

@@ -1,0 +1,205 @@
+address_id	street	floor	postal_code	city	province	country
+addr-sh1	Alte Ufergasse 004	 Zimmer 482	1681	 Mattsee	 Wien	 Austria
+addr-sh2	Spiesmayrweg 90	 4 OG	8471	 Innerbraz	 Salzburg	 Austria
+addr-mnd1	Mühlboden 50b	 Apt. 903	7308	 Feistritz am Wechsel	 Kärnten	 Austria
+addr-mnd2	Heideweg 1	 8 OG	6099	 Ilztal	 Niederösterreich	 Austria
+addr-cust1-sh1	Brunnelligasse 84b	 Zimmer 431	4914	 Waidhofen an der Thaya	 Vorarlberg	 Austria
+addr-cust2-sh1	Zellerstraße 00c	 Zimmer 080	8873	 Velden am Wörther See	 Steiermark	 Austria
+addr-cust3-sh1	Schaunbergerstraße 90a	 Zimmer 086	4038	 Eichgraben	 Burgenland	 Austria
+addr-cust4-sh1	Tiroler Straße 971	 Apt. 897	4915	 Hausleiten	 Wien	 Austria
+addr-cust5-sh1	Köhldorfergasse 07a	 Apt. 011	6254	 Kottes-Purk	 Niederösterreich	 Austria
+addr-cust6-sh1	Alpenlandstraße 76c	 Zimmer 854	8113	 Salzburg	 Steiermark	 Austria
+addr-cust7-sh1	Wasen 4	 Zimmer 138	8312	 Innerbraz	 Wien	 Austria
+addr-cust8-sh1	Ottogasse 30a	 Zimmer 152	3094	 Zell an der Pram	 Oberösterreich	 Austria
+addr-cust9-sh1	Zulechnerweg 082	 Apt. 970	7029	 Yspertal	 Burgenland	 Austria
+addr-cust10-sh1	Privatweg 44b	 Zimmer 944	8486	 Oed-Oehling	 Vorarlberg	 Austria
+addr-cust11-sh1	Hauptplatz 78	 1 OG	1462	 Marbach an der Donau	 Kärnten	 Austria
+addr-cust12-sh1	Ringweg 9	 Apt. 890	7966	 Waidhofen an der Thaya	 Burgenland	 Austria
+addr-cust13-sh1	Fuchsgrubenweg 17c	 4 OG	3012	 Feistritz am Wechsel	 Oberösterreich	 Austria
+addr-cust14-sh1	Steingrüneredt 40b	 4 OG	1413	 Tragwein	 Steiermark	 Austria
+addr-cust15-sh1	Zebragasse 406	 Zimmer 974	4180	 Dornbirn	 Oberösterreich	 Austria
+addr-cust16-sh1	Nordwestbahnbrücke 0	 4 OG	1387	 Zeillern	 Wien	 Austria
+addr-cust17-sh1	Malerweg 29b	 Zimmer 979	8153	 St. Veit an der Glan	 Wien	 Austria
+addr-cust18-sh1	Seestraße 03	 Apt. 429	1342	 Fritzens	 Oberösterreich	 Austria
+addr-cust19-sh1	Steingrüneredt 6	 6 OG	2387	 Ilz	 Vorarlberg	 Austria
+addr-cust20-sh1	Spargelfeldgasse 18b	 5 OG	3818	 Kirchdorf am Inn	 Steiermark	 Austria
+addr-cust21-sh1	Thomas Koschat-Gasse 97c	 6 OG	7012	 Dornbirn	 Vorarlberg	 Austria
+addr-cust22-sh1	Musikpavillon Riezlern 10	 Zimmer 644	5900	 Fiss	 Kärnten	 Austria
+addr-cust23-sh1	Tennweg 67b	 Apt. 784	3498	 Viehhofen	 Tirol	 Austria
+addr-cust24-sh1	Birkenweg 04	 4 OG	1232	 Kirchdorf am Inn	 Burgenland	 Austria
+addr-cust25-sh1	Spiesmayrweg 557	 Apt. 941	6022	 Itter	 Vorarlberg	 Austria
+addr-cust26-sh1	Hauptplatz 28a	 2 OG	5527	 Zell am Pettenfirst	 Tirol	 Austria
+addr-cust27-sh1	Leifling 7	 Apt. 492	7757	 Dornbirn	 Wien	 Austria
+addr-cust28-sh1	Lindenweg 6	 6 OG	8967	 Klagenfurt	 Salzburg	 Austria
+addr-cust29-sh1	Alpenlandstraße 39	 1 OG	9980	 Unterauersbach	 Oberösterreich	 Austria
+addr-cust30-sh1	Uferstraße (Schwarzau am Steinfeld) 2	 Zimmer 300	6345	 Übersbach	 Tirol	 Austria
+addr-cust31-sh1	Anton Wildgans-Straße 40a	 1 OG	9450	 Fritzens	 Salzburg	 Austria
+addr-cust32-sh1	Dr.Karl Holoubek-Str. 9	 Apt. 979	5748	 Viehhofen	 Niederösterreich	 Austria
+addr-cust33-sh1	Wasen 28a	 Apt. 695	1649	 Eichgraben	 Niederösterreich	 Austria
+addr-cust34-sh1	Musikpavillon Riezlern 35b	 Zimmer 370	7050	 Graz	 Kärnten	 Austria
+addr-cust35-sh1	Lackenweg 514	 Apt. 111	5027	 Lech	 Salzburg	 Austria
+addr-cust36-sh1	Bühelweg 64	 Apt. 111	5694	 Axams	 Steiermark	 Austria
+addr-cust37-sh1	Radetzkystraße 97a	 Zimmer 892	3781	 Raiding	 Oberösterreich	 Austria
+addr-cust38-sh1	Unterer Sonnrainweg 704	 7 OG	4458	 Turnau	 Vorarlberg	 Austria
+addr-cust39-sh1	Musikpavillon Riezlern 6	 0 OG	7549	 Zell am Pettenfirst	 Salzburg	 Austria
+addr-cust40-sh1	Strassfeld 04	 Zimmer 799	5638	 Unterauersbach	 Vorarlberg	 Austria
+addr-cust41-sh1	Am Sternweg 83b	 8 OG	3434	 Jungholz	 Vorarlberg	 Austria
+addr-cust42-sh1	Hermann von Gilmweg 614	 Zimmer 696	4424	 Niederleis	 Vorarlberg	 Austria
+addr-cust43-sh1	Bahnhofstraße 684	 Apt. 646	7048	 Breitenbach am Inn	 Kärnten	 Austria
+addr-cust44-sh1	Jochriemgutstraße 6	 Apt. 777	4093	 Kottes-Purk	 Wien	 Austria
+addr-cust45-sh1	Ahorngasse (St. Andrä) 27a	 Zimmer 219	7676	 Lech	 Tirol	 Austria
+addr-cust46-sh1	Bahnstraße (Gerhaus) 01b	 Apt. 541	3674	 Bergern im Dunkelsteinerwald	 Burgenland	 Austria
+addr-cust47-sh1	Moosbachgasse 55	 Apt. 431	5803	 Hochwolkersdorf	 Burgenland	 Austria
+addr-cust48-sh1	Unterer Sonnrainweg 51c	 Apt. 303	3567	 Pilgersdorf	 Niederösterreich	 Austria
+addr-cust49-sh1	Gösting 2	 3 OG	4294	 Hinterhornbach	 Steiermark	 Austria
+addr-cust50-sh1	Zwergjoch 54c	 Zimmer 422	3879	 Lech	 Kärnten	 Austria
+addr-cust51-sh1	Am Färberberg 95c	 1 OG	2199	 Linz	 Niederösterreich	 Austria
+addr-cust52-sh1	Wasen 60b	 Apt. 644	4575	 Tragwein	 Tirol	 Austria
+addr-cust53-sh1	Kinderheimgasse 980	 Apt. 816	3778	 Eichgraben	 Tirol	 Austria
+addr-cust54-sh1	Alte Poststraße 45c	 Apt. 128	2644	 Dornbirn	 Tirol	 Austria
+addr-cust55-sh1	Hochhaus Neue Donau 18a	 Apt. 000	7045	 Axams	 Tirol	 Austria
+addr-cust56-sh1	Luegstraße 51a	 Apt. 815	2509	 Innerbraz	 Burgenland	 Austria
+addr-cust57-sh1	Ahorngasse (St. Andrä) 09b	 6 OG	4629	 Oed-Oehling	 Niederösterreich	 Austria
+addr-cust58-sh1	Tiroler Straße 45a	 Apt. 800	7783	 Baumgartenberg	 Burgenland	 Austria
+addr-cust59-sh1	Hainschwang 52b	 Zimmer 177	2263	 Uttendorf	 Oberösterreich	 Austria
+addr-cust60-sh1	Fuchsgrubenweg 669	 9 OG	6498	 Itter	 Kärnten	 Austria
+addr-cust61-sh1	Leifling 662	 2 OG	8944	 Unterauersbach	 Vorarlberg	 Austria
+addr-cust62-sh1	Neustiftgasse 72	 Zimmer 441	8601	 Axams	 Wien	 Austria
+addr-cust63-sh1	Bruderhofgasse 2	 Zimmer 454	5244	 Übelbach	 Burgenland	 Austria
+addr-cust64-sh1	Privatweg 352	 6 OG	3343	 St. Pölten	 Niederösterreich	 Austria
+addr-cust65-sh1	Höggen 438	 Zimmer 065	1597	 Neukirchen an der Enknach	 Niederösterreich	 Austria
+addr-cust66-sh1	Reitschulgasse 98	 7 OG	2425	 Neukirchen an der Enknach	 Steiermark	 Austria
+addr-cust67-sh1	Tiroler Straße 3	 Zimmer 808	9799	 Ungerdorf	 Steiermark	 Austria
+addr-cust68-sh1	Teichstraße 34	 Zimmer 467	6940	 Marbach an der Donau	 Salzburg	 Austria
+addr-cust69-sh1	Koloniestraße 10a	 Zimmer 926	7091	 Neudorf bei Staatz	 Vorarlberg	 Austria
+addr-cust70-sh1	Musikpavillon Riezlern 80b	 6 OG	5589	 Übelbach	 Wien	 Austria
+addr-cust71-sh1	Tennweg 05b	 Apt. 903	6048	 Linz	 Steiermark	 Austria
+addr-cust72-sh1	Darnautgasse 334	 0 OG	4855	 Kirchdorf am Inn	 Steiermark	 Austria
+addr-cust73-sh1	Hans-Mauracher-Straße 26a	 0 OG	8720	 Mauterndorf	 Oberösterreich	 Austria
+addr-cust74-sh1	Sportplatzstraße 17a	 Apt. 669	9840	 Überackern	 Kärnten	 Austria
+addr-cust75-sh1	Schaunbergerstraße 43c	 Zimmer 865	2069	 Trebesing	 Salzburg	 Austria
+addr-cust76-sh1	Wasen 45c	 7 OG	1412	 Fiss	 Oberösterreich	 Austria
+addr-cust77-sh1	Straßerau 87a	 Apt. 303	2103	 Kirchdorf am Inn	 Burgenland	 Austria
+addr-cust78-sh1	Fritz-Pregl-Straße 490	 4 OG	1629	 Purbach am Neusiedler See	 Oberösterreich	 Austria
+addr-cust79-sh1	Flurweg 4	 Zimmer 133	9721	 Gößnitz	 Niederösterreich	 Austria
+addr-cust80-sh1	Hernstorferstraße 63	 3 OG	5288	 Jungholz	 Steiermark	 Austria
+addr-cust81-sh1	Niederegg 270	 Zimmer 463	9145	 Neustift an der Lafnitz	 Vorarlberg	 Austria
+addr-cust82-sh1	Alte Poststraße 8	 Apt. 065	7983	 Oberwaltersdorf	 Oberösterreich	 Austria
+addr-cust83-sh1	Koloniestraße 75b	 4 OG	5581	 Geiersberg	 Wien	 Austria
+addr-cust84-sh1	Janzgasse 22c	 Zimmer 356	2985	 Ilztal	 Salzburg	 Austria
+addr-cust85-sh1	Am Kronawett (Hagenbrunn) 37a	 Apt. 283	1599	 Unterauersbach	 Oberösterreich	 Austria
+addr-cust86-sh1	Feichteggerwiese 65	 6 OG	8276	 Klagenfurt	 Wien	 Austria
+addr-cust87-sh1	Klingergasse 11a	 6 OG	9695	 Preitenegg	 Burgenland	 Austria
+addr-cust88-sh1	Verwaltersiedlung 29a	 Apt. 118	2970	 Ungerdorf	 Kärnten	 Austria
+addr-cust89-sh1	Steilmannstraße 42a	 Apt. 510	6027	 Gößnitz	 Tirol	 Austria
+addr-cust90-sh1	Mitterweg 59c	 0 OG	9654	 Innerbraz	 Burgenland	 Austria
+addr-cust91-sh1	Blattur 40	 Zimmer 372	3459	 Bregenz	 Oberösterreich	 Austria
+addr-cust92-sh1	Kahlenberger Straße 41b	 Zimmer 672	3107	 Marbach an der Donau	 Kärnten	 Austria
+addr-cust93-sh1	Wasen 66a	 Apt. 384	9271	 Fritzens	 Burgenland	 Austria
+addr-cust94-sh1	Bahnhofstraße 293	 Apt. 992	8282	 Linz	 Niederösterreich	 Austria
+addr-cust95-sh1	Prixgasse 8	 6 OG	1564	 Pollham	 Tirol	 Austria
+addr-cust96-sh1	Ahorngasse (St. Andrä) 44c	 3 OG	7454	 Gams bei Hieflau	 Steiermark	 Austria
+addr-cust97-sh1	Seestraße 82b	 5 OG	8900	 Sankt Johann im Saggautal	 Oberösterreich	 Austria
+addr-cust98-sh1	Gröretgasse 4	 0 OG	5298	 Linz	 Oberösterreich	 Austria
+addr-cust99-sh1	Kegelprielstraße 102	 6 OG	2678	 Eben im Pongau	 Steiermark	 Austria
+addr-cust100-sh1	Gröretgasse 40	 4 OG	4721	 Axams	 Vorarlberg	 Austria
+addr-cust1-sh2	Grub 25	 0 OG	3205	 Mattsee	 Tirol	 Austria
+addr-cust2-sh2	Torrogasse 32c	 Apt. 380	2435	 Finkenberg	 Niederösterreich	 Austria
+addr-cust3-sh2	Donaugasse 7	 Zimmer 333	8871	 Villach	 Burgenland	 Austria
+addr-cust4-sh2	Kerpelystraße 03b	 Zimmer 312	6266	 Villach	 Wien	 Austria
+addr-cust5-sh2	Alpenlandstraße 73a	 Apt. 354	5340	 Jungholz	 Burgenland	 Austria
+addr-cust6-sh2	Prixgasse 74	 6 OG	6119	 Zeillern	 Kärnten	 Austria
+addr-cust7-sh2	Weiherweg 86b	 Zimmer 542	5980	 Altenfelden	 Tirol	 Austria
+addr-cust8-sh2	Flurweg 59	 Apt. 217	6319	 Baumgartenberg	 Niederösterreich	 Austria
+addr-cust9-sh2	Ziehrerstraße 00a	 0 OG	8329	 Oberwaltersdorf	 Oberösterreich	 Austria
+addr-cust10-sh2	Gemeindeplatz 796	 7 OG	8310	 Ratten	 Salzburg	 Austria
+addr-cust11-sh2	Wiener Straße 06a	 Zimmer 278	9936	 Johnsbach	 Steiermark	 Austria
+addr-cust12-sh2	Stöpflweg 11c	 Apt. 040	8746	 Tragwein	 Salzburg	 Austria
+addr-cust13-sh2	Erlenweg 86a	 Apt. 471	1474	 Viehhofen	 Steiermark	 Austria
+addr-cust14-sh2	Johann-Strauß-Gasse 46b	 Zimmer 719	2113	 Raiding	 Niederösterreich	 Austria
+addr-cust15-sh2	Zwergjoch 25c	 Apt. 674	7868	 Bergern im Dunkelsteinerwald	 Steiermark	 Austria
+addr-cust16-sh2	Neustiftgasse 92c	 2 OG	7890	 Aigen im Mühlkreis	 Tirol	 Austria
+addr-cust17-sh2	Ziehrerstraße 862	 5 OG	2762	 Deutsch-Wagram	 Niederösterreich	 Austria
+addr-cust18-sh2	Niederegg 119	 Apt. 644	6281	 Bregenz	 Tirol	 Austria
+addr-cust19-sh2	Kubinstraße 74c	 2 OG	6372	 Velden am Wörther See	 Burgenland	 Austria
+addr-cust20-sh2	Graben (Burgauberg) 286	 Apt. 341	9206	 Berndorf bei Salzburg	 Salzburg	 Austria
+addr-cust21-sh2	Auf der Stift 90c	 5 OG	8162	 Sankt Johann im Saggautal	 Tirol	 Austria
+addr-cust22-sh2	Gösting 0	 Zimmer 697	5864	 St. Peter am Kammersberg	 Wien	 Austria
+addr-cust23-sh2	Konrad-Duden-Gasse 78	 Zimmer 374	8124	 Oed-Oehling	 Salzburg	 Austria
+addr-cust24-sh2	Leifling 0	 Zimmer 492	1920	 Taxenbach	 Vorarlberg	 Austria
+addr-cust25-sh2	Konrad-Duden-Gasse 2	 Zimmer 000	7984	 Mautern an der Donau	 Oberösterreich	 Austria
+addr-cust26-sh2	Eckgrabenweg 09a	 Zimmer 124	8789	 Wien	 Wien	 Austria
+addr-cust27-sh2	Klagenfurter Straße 76	 Apt. 611	3920	 Jungholz	 Salzburg	 Austria
+addr-cust28-sh2	Schaunbergerstraße 06c	 Apt. 774	9968	 Turnau	 Tirol	 Austria
+addr-cust29-sh2	Fritz-Pregl-Straße 79a	 Zimmer 684	2831	 Lavamünd	 Vorarlberg	 Austria
+addr-cust30-sh2	Hof 83c	 Zimmer 973	5081	 Wien	 Vorarlberg	 Austria
+addr-cust31-sh2	Raiden 27a	 Apt. 225	3823	 Krumbach	 Kärnten	 Austria
+addr-cust32-sh2	Moosbachgasse 21b	 6 OG	4567	 Turnau	 Salzburg	 Austria
+addr-cust33-sh2	Kinderheimgasse 10a	 Zimmer 811	4540	 Weißkirchen an der Traun	 Salzburg	 Austria
+addr-cust34-sh2	Klagenfurter Straße 40b	 1 OG	8215	 Weißkirchen an der Traun	 Burgenland	 Austria
+addr-cust35-sh2	Poppichl 62	 9 OG	9923	 Axams	 Tirol	 Austria
+addr-cust36-sh2	Mühlboden 53b	 Apt. 825	4582	 Graz	 Salzburg	 Austria
+addr-cust37-sh2	Zwergjoch 38b	 2 OG	9599	 Ellmau	 Steiermark	 Austria
+addr-cust38-sh2	Graben (Burgauberg) 15c	 1 OG	8165	 Weißkirchen an der Traun	 Oberösterreich	 Austria
+addr-cust39-sh2	Torrogasse 35	 Apt. 671	1739	 Axams	 Niederösterreich	 Austria
+addr-cust40-sh2	Mitterweg 38a	 Apt. 964	8322	 Preitenegg	 Tirol	 Austria
+addr-cust41-sh2	Kirchenplatz 66c	 Zimmer 229	2647	 Viehhofen	 Burgenland	 Austria
+addr-cust42-sh2	Hainschwang 76a	 Zimmer 519	2719	 Sankt Johann im Saggautal	 Niederösterreich	 Austria
+addr-cust43-sh2	Bahnhofstraße 11	 5 OG	5090	 Tragwein	 Wien	 Austria
+addr-cust44-sh2	Konrad-Duden-Gasse 08c	 Zimmer 828	7388	 Überackern	 Tirol	 Austria
+addr-cust45-sh2	Herminengasse 165	 Zimmer 655	6696	 Finkenberg	 Niederösterreich	 Austria
+addr-cust46-sh2	Brunnelligasse 03b	 9 OG	8847	 Krumbach	 Oberösterreich	 Austria
+addr-cust47-sh2	Oberbödenalm 429	 Apt. 807	6673	 Ilztal	 Burgenland	 Austria
+addr-cust48-sh2	Kleinbaumgarten 94	 4 OG	5421	 Dürnkrut	 Niederösterreich	 Austria
+addr-cust49-sh2	Feld-Weg 73c	 1 OG	6095	 Mattsee	 Kärnten	 Austria
+addr-cust50-sh2	Verwaltersiedlung 27b	 Apt. 295	3683	 Johnsbach	 Vorarlberg	 Austria
+addr-cust51-sh2	Wasen 6	 3 OG	5671	 Dornbirn	 Salzburg	 Austria
+addr-cust52-sh2	Mühle 21b	 Apt. 058	9762	 St. Pölten	 Burgenland	 Austria
+addr-cust53-sh2	Alleestraße (Poysbrunn) 07c	 Zimmer 940	7302	 Geiersberg	 Vorarlberg	 Austria
+addr-cust54-sh2	Römerweg 275	 Zimmer 689	4846	 Lech	 Salzburg	 Austria
+addr-cust55-sh2	Auf der Stift 20	 Apt. 712	2478	 Kirchdorf am Inn	 Tirol	 Austria
+addr-cust56-sh2	Hermann von Gilmweg 473	 Apt. 874	9058	 Ratten	 Oberösterreich	 Austria
+addr-cust57-sh2	Anton Wildgans-Straße 84a	 3 OG	1579	 Oed-Oehling	 Tirol	 Austria
+addr-cust58-sh2	Graben (Burgauberg) 555	 1 OG	5959	 Unterstinkenbrunn	 Tirol	 Austria
+addr-cust59-sh2	Alpenlandstraße 10b	 Apt. 885	3832	 Großhöflein	 Salzburg	 Austria
+addr-cust60-sh2	Tiroler Straße 44	 6 OG	4780	 Raiding	 Niederösterreich	 Austria
+addr-cust61-sh2	Bühelweg 869	 9 OG	8687	 Aigen im Mühlkreis	 Burgenland	 Austria
+addr-cust62-sh2	Windisch 20c	 2 OG	6783	 Hochwolkersdorf	 Burgenland	 Austria
+addr-cust63-sh2	Hochfeistritz 09b	 6 OG	5773	 Hinterhornbach	 Oberösterreich	 Austria
+addr-cust64-sh2	Wiener Straße 591	 Zimmer 543	5112	 Taxenbach	 Niederösterreich	 Austria
+addr-cust65-sh2	Lindenweg 67b	 4 OG	8544	 Allerheiligen bei Wildon	 Salzburg	 Austria
+addr-cust66-sh2	Alte Poststraße 32b	 9 OG	4827	 Ort im Innkreis	 Niederösterreich	 Austria
+addr-cust67-sh2	Am Sternweg 36b	 2 OG	2923	 Mauterndorf	 Steiermark	 Austria
+addr-cust68-sh2	Auer-von-Welsbach-Weg 6	 Apt. 170	7648	 Zwölfaxing	 Niederösterreich	 Austria
+addr-cust69-sh2	Niederegg 9	 9 OG	7553	 Vitis	 Tirol	 Austria
+addr-cust70-sh2	Dr.-Oberreiter-Straße 68c	 Apt. 412	8133	 Gams bei Hieflau	 Tirol	 Austria
+addr-cust71-sh2	Hütten 36b	 Zimmer 856	7350	 Johnsbach	 Wien	 Austria
+addr-cust72-sh2	Grub 3	 Apt. 115	9074	 Neustift an der Lafnitz	 Salzburg	 Austria
+addr-cust73-sh2	Uferstraße (Schwarzau am Steinfeld) 13c	 Apt. 324	2248	 Oberstorcha	 Wien	 Austria
+addr-cust74-sh2	Lange Mekotte 11	 Apt. 536	6942	 Aigen im Mühlkreis	 Niederösterreich	 Austria
+addr-cust75-sh2	Zebragasse 9	 Apt. 689	8027	 Krumbach	 Steiermark	 Austria
+addr-cust76-sh2	Oedt 77	 9 OG	1749	 Hartl	 Steiermark	 Austria
+addr-cust77-sh2	Berggasse 9	 0 OG	9318	 Mattsee	 Vorarlberg	 Austria
+addr-cust78-sh2	Anton Wildgans-Straße 13b	 9 OG	6896	 St. Pölten	 Burgenland	 Austria
+addr-cust79-sh2	Feldstapfe 51	 1 OG	8533	 Mitterbach am Erlaufsee	 Tirol	 Austria
+addr-cust80-sh2	Glanfeldbachweg 78b	 7 OG	4511	 Rabenwald	 Salzburg	 Austria
+addr-cust81-sh2	Perspektivstraße 524	 0 OG	8208	 Innsbruck	 Burgenland	 Austria
+addr-cust82-sh2	Unterer Sonnrainweg 38	 Zimmer 011	1738	 Deutsch-Wagram	 Kärnten	 Austria
+addr-cust83-sh2	Raiden 60a	 Zimmer 907	5700	 Waldkirchen am Wesen	 Oberösterreich	 Austria
+addr-cust84-sh2	Gartenstraße 30c	 Zimmer 848	2248	 Baumgartenberg	 Steiermark	 Austria
+addr-cust85-sh2	Janzgasse 138	 8 OG	4984	 Feistritz am Wechsel	 Salzburg	 Austria
+addr-cust86-sh2	Reitschulgasse 36c	 Zimmer 924	3061	 Öblarn	 Vorarlberg	 Austria
+addr-cust87-sh2	Am Kronawett (Hagenbrunn) 24c	 Apt. 019	3442	 Übelbach	 Wien	 Austria
+addr-cust88-sh2	Malerweg 5	 Apt. 228	3647	 Salzburg	 Niederösterreich	 Austria
+addr-cust89-sh2	Hernstorferstraße 08	 Apt. 758	9490	 Lavamünd	 Oberösterreich	 Austria
+addr-cust90-sh2	Mühlenweg 06	 8 OG	7012	 Neustift an der Lafnitz	 Steiermark	 Austria
+addr-cust91-sh2	Koloniestraße 83	 Apt. 915	5417	 Übersbach	 Vorarlberg	 Austria
+addr-cust92-sh2	Johann-Strauß-Gasse 6	 5 OG	8330	 Fritzens	 Oberösterreich	 Austria
+addr-cust93-sh2	Zellerstraße 6	 7 OG	5280	 Turnau	 Salzburg	 Austria
+addr-cust94-sh2	Römerstraße 659	 3 OG	8674	 Klagenfurt	 Salzburg	 Austria
+addr-cust95-sh2	Oedt 65a	 Zimmer 145	1925	 Altenfelden	 Niederösterreich	 Austria
+addr-cust96-sh2	Lange Mekotte 98	 4 OG	8293	 Zwölfaxing	 Oberösterreich	 Austria
+addr-cust97-sh2	Krankenhausstraße 55b	 2 OG	5236	 Eben im Pongau	 Steiermark	 Austria
+addr-cust98-sh2	Musikpavillon Riezlern 8	 4 OG	8809	 Lavamünd	 Steiermark	 Austria
+addr-cust99-sh2	Feichteggerwiese 25b	 Apt. 539	3565	 Velden am Wörther See	 Kärnten	 Austria
+addr-cust100-sh2	Fünfhaus (Paasdorf) 17a	 Zimmer 135	9040	 Johnsdorf-Brunn	 Niederösterreich	 Austria

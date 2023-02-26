@@ -10,7 +10,7 @@ namespace CaaSTests.UnitTest1
     public class AdoCartDetailsTests    {
         
         private IBaseDao<CartDetails> _cartdetailsDao;
-        private string _table = "CartsDetailsShop1";
+        private string _table = "CartsDetails";
 
 
         [SetUp]
@@ -30,36 +30,37 @@ namespace CaaSTests.UnitTest1
 
         }
 
-        [Test]
-        public async Task TestFindByIdAsync()
+        [TestCase("cartDet9-sh1", ExpectedResult = false)]
+        [TestCase("cartDet1-cart1-cust1-sh2", ExpectedResult = true)]        
+        public async Task<bool> TestFindByIdAsync(string cartDetId)
         {
-            CartDetails? cartdetails1 = await _cartdetailsDao.FindByIdAsync("cd-9", _table);
-            Assert.IsNotNull(cartdetails1);
-            Assert.True(cartdetails1.ProductId == ("arz-18"));
+            CartDetails? cartdetails1 = await _cartdetailsDao.FindByIdAsync(cartDetId, _table);
+            bool isnull= (cartdetails1 is not null);
+            return isnull;
 
         }
 
         [Test] 
         public async Task TestUpdateAsync()
         {                        
-            CartDetails? cartdetails = await _cartdetailsDao.FindByIdAsync("cd-8", _table);
+            CartDetails? cartdetails = await _cartdetailsDao.FindByIdAsync("cartDet1-cart2-cust1-sh1", _table);
             cartdetails.Quantity = 0;
             await _cartdetailsDao.UpdateAsync(cartdetails, _table);
             Assert.That(cartdetails.Quantity == 0);
 
-            cartdetails.Quantity = 18;
+            cartdetails.Quantity = 36;
             await _cartdetailsDao.UpdateAsync(cartdetails, _table);
-            Assert.That(cartdetails.Quantity == 18);
+            Assert.That(cartdetails.Quantity == 36);
 
         }
 
         [Test]
         public async Task TestDeleteByIdAsync()
         {
-            CartDetails? cartdetails = await _cartdetailsDao.FindByIdAsync("cd-4", _table);            
+            CartDetails? cartdetails = await _cartdetailsDao.FindByIdAsync("cartDet4-sh1", _table);            
             Assert.IsNotNull(cartdetails);
-            await _cartdetailsDao.DeleteByIdAsync("cd-4", _table);
-            cartdetails = await _cartdetailsDao.FindByIdAsync("cd-4", _table);
+            await _cartdetailsDao.DeleteByIdAsync("cartDet4-sh1", _table);
+            cartdetails = await _cartdetailsDao.FindByIdAsync("cartDet4-sh1", _table);
             Assert.IsNull(cartdetails);
 
         }
@@ -67,15 +68,15 @@ namespace CaaSTests.UnitTest1
         [Test]
         public async Task TestStoreAsync()
         {
-            CartDetails? cartdetails = await _cartdetailsDao.FindByIdAsync("cd-4", _table);
+            CartDetails? cartdetails = await _cartdetailsDao.FindByIdAsync("cartDet4-sh1", _table);
             Assert.IsNull(cartdetails);
-            cartdetails= new CartDetails("cd-4", "cart-6-c-4", "arz-94", 7);
+            cartdetails= new CartDetails("cartDet4-sh1", "cart6-cust4-sh1", "arz-94", 7,"sh1");
             await _cartdetailsDao.StoreAsync(cartdetails, _table);
            
 
-            CartDetails? cartdetails1 = new CartDetails("cd-1100", "cart-10-c-1", "arz-23", 20);
+            CartDetails? cartdetails1 = new CartDetails("cartDet1100-sh1", "cart10-cust1-sh1", "arz-23", 20,"sh1");
             await _cartdetailsDao.StoreAsync(cartdetails1, _table);
-            CartDetails? cartdetails2 = await _cartdetailsDao.FindByIdAsync("cd-1100", _table);
+            CartDetails? cartdetails2 = await _cartdetailsDao.FindByIdAsync("cartDet1100-sh1", _table);
             Assert.That(cartdetails2.CartId, Is.EqualTo((cartdetails1.CartId)));
 
         }

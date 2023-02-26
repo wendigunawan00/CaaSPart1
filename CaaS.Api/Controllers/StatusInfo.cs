@@ -10,10 +10,16 @@ public static class StatusInfo
         Detail = $"Customer wid ID '{customerId}' already exists"
     };
 
-    public static ProblemDetails InvalidCustomerId(String customerId) => new ProblemDetails
+    public static ProblemDetails InvalidPersonId(String customerId) => new ProblemDetails
     {
-        Title = "Invalid customer ID",
+        Title = "Invalid Person ID",
         Detail = $"Customer with ID '{customerId}' does not exist"
+    }; 
+    
+    public static ProblemDetails InvalidEmail(String email) => new ProblemDetails
+    {
+        Title = "Invalid Person ID",
+        Detail = $"Customer with ID '{email}' does not exist"
     }; 
     public static ProblemDetails InvalidProductId(String productId) => new ProblemDetails
     {

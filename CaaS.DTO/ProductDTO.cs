@@ -8,7 +8,9 @@ public class ProductDTO
     public string AmountDesc { get; set; }
     public string? ProductDesc { get; set; }
     public string? DownloadLink { get; set; }
+    public string ShopId { get; set; }
+
 
     public override string ToString() =>
-      $"Product(id:{Id}, name:{Name}, price:{Price}, amountDesc:{AmountDesc}, productDesc:{ProductDesc})";
+      $"Product(id:{Id}, name:{Name}, price:{Price}, amountDesc:{AmountDesc}, productDesc:{ProductDesc},Shop:{ShopId})";
 }

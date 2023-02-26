@@ -36,46 +36,43 @@ builder.Services.AddAuthentication(option =>
         });
 
 builder.Services.AddMvc();
-builder.Services.AddScoped<IManagementLogic<Product>>(_ =>  
-    new ManagementLogic<Product>(new AdoProductDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "ProductShop1")
+builder.Services.AddScoped<IManagementLogic<Product>>(_ =>
+    new ManagementLogic<Product>(new AdoProductDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "Products")
 );
-builder.Services.AddScoped<IManagementLogic<Person>>(_ =>  
-    new ManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CustomersShop1")
+
+builder.Services.AddScoped<IManagementLogic<Person>>(_ =>
+    new ManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "Customers")
 );
 
 builder.Services.AddScoped<IAnalytic>(_ =>
     new StatsAnalytic(
-        new ManagementLogic<Cart>(new AdoCartDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CartsShop1"),
-        new ManagementLogic<Order>(new AdoOrderDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "OrdersShop1"),
-        new ManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CustomersShop1"),
-        new ManagementLogic<Product>(new AdoProductDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "ProductShop1"),
-        new ManagementLogic<CartDetails>(new AdoCartDetailsDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CartsDetailsShop1"),
-        new ManagementLogic<OrderDetails>(new AdoOrderDetailsDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "OrdersDetailsShop1")
-));
+        DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")));
 builder.Services.AddScoped<IAuth>(_ =>
     new Auth(
-        new ManagementLogic<Shop>(new AdoShopDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "Shops"),
-        new ManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "Mandants"),
-        new ManagementLogic<AppKey>(new AdoAppKeyDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "AppKeys")
-        
-));
+        new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new AdoAppKeyDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new string[] {"Mandants","AppKeys"} ) 
+);
 
 builder.Services.AddScoped<IOrderManagementLogic>(_ =>
     new OrderManagementLogic(
-        new ManagementLogic<Cart>(new AdoCartDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CartsShop1"),
-        new ManagementLogic<Order>(new AdoOrderDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "OrdersShop1"),
-        new ManagementLogic<Product>(new AdoProductDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "ProductShop1") ,  
-        new ManagementLogic<CartDetails>(new AdoCartDetailsDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "CartsDetailsShop1" ),
-        new ManagementLogic<OrderDetails>(new AdoOrderDetailsDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "OrdersDetailsShop1")
-));
+        new AdoCartDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new AdoOrderDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new AdoProductDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new AdoCartDetailsDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new AdoOrderDetailsDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")),
+        new string[] { "Carts", "Orders", "Products", "CartsDetails", "OrdersDetails","Customers" }
+        ));
+
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddCors(
     builder => builder.AddDefaultPolicy(
         policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 builder.Services.AddOpenApiDocument(
     settings => settings.PostProcess = doc => doc.Info.Title = "CaaS");
-//builder.Services.AddHostedService<QueuedUpdateService>();
-//builder.Services.AddSingleton<UpdateChannel>();
+
 
 var app = builder.Build();
 

@@ -13,7 +13,8 @@ namespace CaaS.Dal.Ado
             dateOfBirth: (DateTime)row["dob"],
             email: (string)row["email"],
             addressId: (string)row["address"],
-            status: (string)row["status"]
+            status: (string)row["status"],
+            password: (string)row["password"]
         );
 
 
@@ -22,7 +23,7 @@ namespace CaaS.Dal.Ado
             id: (string)row["address_id"],
             street: (string)row["street"],
             floor: (string)row["floor"],
-            postalCode: (double)row["postal_code"],
+            postalCode: (int)row["postal_code"],
             city: (string)row["city"],
             province: (string)row["province"],
             country: (string)row["country"]
@@ -33,9 +34,7 @@ namespace CaaS.Dal.Ado
            id: (string)row["shop_id"],
            name: (string)row["shop_name"],
            fieldDesc: (string)row["field_descriptions"],
-           mandantId: (string)row["mandant_id"],
-           address: (string)row["address"],
-           appKey: (string)row["app_key"]
+           address: (string)row["address"]
         );
 
 
@@ -46,7 +45,8 @@ namespace CaaS.Dal.Ado
             price: (double)row["price"],
             amountDesc: (string)row["amount_desc"],
             productDesc: (string)row["product_desc"],
-            downloadLink: (string)row["download_link"]
+            downloadLink: (string)row["download_link"],
+            shopId: (string)row["shop_id"]
         );
 
 
@@ -57,7 +57,9 @@ namespace CaaS.Dal.Ado
            productId: (string)row["product_id"],
            unitPrice: (double)row["unit_price"],
            quantity: (double)row["qty"],
-           discount: (double)row["discount"]
+           discount: (double)row["discount"],
+           shopId: (string)row["shop_id"]
+
        );
 
         public static Order MapRowToOrder(IDataRecord row) =>
@@ -73,7 +75,8 @@ namespace CaaS.Dal.Ado
             id: (string)row["cart_details_id"],
             cartId: (string)row["cart_id"],
             productId: (string)row["product_id"],
-            quantity: (double)row["qty"]
+            quantity: (double)row["qty"],
+            shopId: (string)row["shop_id"]
         );
 
         public static Cart MapRowToCart(IDataRecord row) =>
@@ -87,8 +90,8 @@ namespace CaaS.Dal.Ado
         new(
            id: (string)row["app_key"],
            appKeyName: (string)row["app_key_name"],
-           appKeyPassword: (string)row["app_key_password"]
+           appKeyPassword: (string)row["app_key_password"],
+           shopId: (string)row["shop_id"]
         );
-
     }
 }

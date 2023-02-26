@@ -2,23 +2,19 @@
 
 public class Shop
 {
-    public Shop(string id, string name,string fieldDesc, string mandantId, string address, string appKey)
+    public Shop(string id, string name,string fieldDesc, string address)
     {
         Id = id;
         this.Name = name;
         this.FieldDesc = fieldDesc;
-        this.MandantId = mandantId;
-        this.Address = address;
-        this.AppKey = appKey;
+        this.Address = address;       
     }
 
     public string Id { get; set; }
     public string Name { get; set; }
     public string FieldDesc{ get; set; }
-    public string MandantId { get; set; }
     public string Address { get;  set; }
-    public string AppKey { get;  set; }
 
     public override string ToString() =>
-      $"Shop(id:{Id}, name:{Name}, mandant:{MandantId}), appkey:{AppKey}";
+      $"Shop(id:{Id}, name:{Name},description:{FieldDesc})";
 }

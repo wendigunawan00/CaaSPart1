@@ -14,23 +14,33 @@ namespace CaaS.Api.Controllers
     {
         private IAuth _auth;
 
-        public AuthorizationController(IAuth auth)
+        public AuthorizationController(IAuth auth, IMapper mapper)
         {
            this._auth = auth;
+           _auth.setMapper(mapper ?? throw new ArgumentNullException(nameof(mapper)));
         }
 
-        
-        
-             
+
         [HttpPost("login")]        
         public async Task<IActionResult> Login([FromBody] AdminDTO user)
         {
             var result = await _auth.Authenticate(user);           
             if (result is null) 
             { 
-                return Unauthorized(); 
+                return NotFound("Wrong Email or Password"); 
             }
             return Ok(result);
         }
+
+        //[HttpGet()]
+        //public async Task<IActionResult> GetLastMandant()
+        //{
+        //    var result = await _auth.Authenticate2();
+        //    if (result==0)
+        //    {
+        //        return Unauthorized();
+        //    }
+        //    return Ok(result);
+        //}
     }
 }

@@ -6,6 +6,8 @@ using Dal.Common;
 using CaaS.Logic;
 using CaaS.Domain;
 using Microsoft.AspNetCore.Authorization;
+using MySqlX.XDevAPI.Relational;
+using CaaS.Dal.Ado;
 
 namespace CaaS.Api.Controllers
 {
@@ -16,6 +18,7 @@ namespace CaaS.Api.Controllers
     {
         private readonly IManagementLogic<Product> logic;
         private readonly IMapper mapper;
+
         //private readonly UpdateChannel updateChannel;
 
         //public ProductsController( IMapper mapper, UpdateChannel updateChannel, string table)
@@ -41,18 +44,10 @@ namespace CaaS.Api.Controllers
         /// <param name="Description">Description</param>
         /// <returns>The Product with the given name or description</returns>
         [HttpGet("{Name}/{Description}")]
-        public async Task<IEnumerable<ProductDTO>> GetProductByName( String Name,  String Description)
-        {
-            var products = await logic.Get();
-            List<string> txtList = Name.Split(' ').ToList();
-            List<string> txtList2 = Description.Split(' ').ToList();
-
-            return mapper.Map<IEnumerable<ProductDTO>>( products.Where(
-                p => txtList.Any(word=>p.Name.Contains(word) 
-                || txtList2.Any(word => p.ProductDesc.Contains(word))
-                )
-              )
-            ) ??  Enumerable.Empty<ProductDTO>();
+        public async Task<IEnumerable<ProductDTO>> GetProductByName( string Name,  string Description)
+        {            
+            var products = await logic.GetTByXAndY(Name,Description);
+            return mapper.Map<IEnumerable<ProductDTO>>(products)?? Enumerable.Empty<ProductDTO>();
         }
 
         /// <summary>
@@ -87,13 +82,14 @@ namespace CaaS.Api.Controllers
         /// Returns a created product with the id after creating a product
         /// </summary>
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<ProductDTO>> CreateProduct([FromBody] ProductForCreationDTO productDTO)
         {         
             Domain.Product product = mapper.Map<Domain.Product>(productDTO);
-            var productDTO2 = await logic.Get();
+            var productDTO2 = await logic.GetLast();
+            var count = await logic.CountAll();
        
-            product.Id = Util.createID(productDTO2.LastOrDefault().Id,productDTO2.Count());
+            product.Id = Util.createID(productDTO2!.Id,count);
             await logic.Add(product);
             return CreatedAtAction(actionName: nameof(GetProductById),
                 routeValues: new { ProductId = product.Id },
@@ -106,7 +102,7 @@ namespace CaaS.Api.Controllers
         /// Update a product with the product id given and show it back if success updating
         /// </summary>
         [HttpPut("{productId}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<ProductDTO>> UpdateProduct(String productId,[FromBody] ProductForCreationDTO productDTO)
         {
             Domain.Product? product = (Product?) await logic.Search(productId);
@@ -117,7 +113,7 @@ namespace CaaS.Api.Controllers
             mapper.Map(productDTO,product);
 
             await logic.Update(product);
-            return NoContent();
+            return Ok("Finished Updating");
         }
 
 
@@ -125,12 +121,12 @@ namespace CaaS.Api.Controllers
         /// Delete a product with the product-id given
         /// </summary>
         [HttpDelete("{productId}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult> DeleteProduct([FromRoute] String productId)
         {
             if (await logic.Delete(productId))
             {
-                return NoContent();
+                return Ok("Finished Deleting");
             }
             else
             {

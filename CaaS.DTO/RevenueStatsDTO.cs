@@ -3,6 +3,13 @@
 public class RevenueStatsDTO
 {
     public double TotalRevenue { get; set; }
+
+    public RevenueStatsDTO(double totalRevenue, double totalQuantity)
+    {
+        TotalRevenue = totalRevenue;
+        TotalQuantity = totalQuantity;
+    }
+
     public double TotalQuantity { get;  set; }
 
     

@@ -2,29 +2,16 @@
 using CaaS.Dal.Interfaces;
 using CaaS.Domain;
 using static CaaS.Dal.Ado.AdoMapDao;
-using System.Text.RegularExpressions;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
+public class AdoCartDao : AdoGenericDao<Cart>,IBaseDao<Cart>
 {
     private readonly IBaseDao<Person> personDao;
 
 
     public AdoCartDao(IConnectionFactory connectionFactory) : base(connectionFactory) => this.personDao = new AdoPersonDao(connectionFactory);
-
-    public async Task<IEnumerable<Cart>> FindAllAsync(string table)
-    {
-        return await base.template.QueryAsync($"select * from {table}", MapRowToCart);
-    }
-
-    public async Task<Cart?> FindByIdAsync(string id,string table)
-    {
-        return await base.template.QuerySingleAsync($"select * from {table} where cart_id=@id",
-            MapRowToCart,
-            new QueryParameter("@id", id));
-    }
-   
+       
     public async Task<bool> UpdateAsync(Cart cart,string table)
     {
         Cart? c = await FindByIdAsync(cart.Id, table);
@@ -52,15 +39,38 @@ public class AdoCartDao : AdoBaseDao,IBaseDao<Cart>
         }
         return false;
     }
+    
+    public async Task<IEnumerable<Cart>> FindTByStatus(string status, string table)
+    {
+        string sqlcmd = $"select * from {table} where status = @status";
+        return await base.template.QueryAsync(@sqlcmd,MapRowToCart,
+                   new QueryParameter("@status", status));
+    } 
+    
+    public async Task<Cart> CreateCart(string custId, string table)
+    {
+        string sqlcmd = $"select count(*) from {table} where cust_id = @custId";
+        int lastCartId = await base.template.ExecuteCountAsync(@sqlcmd,new QueryParameter("@custId", custId));
+        var newCart = new Cart($"cart{lastCartId +1}-{custId}",custId,"open");
+        var xtrue = await StoreAsync(newCart,table);
+        return newCart;
+    } 
+    
+    public async Task<IEnumerable<Cart>> FindTByStatusAndId(string status, string id, string table)
+    {
+        string sqlcmd = $"select * from {table} where status = @status And cust_id=@cust_id";
+        return await base.template.QueryAsync(@sqlcmd,MapRowToCart,
+                   new QueryParameter("@status", status),
+                   new QueryParameter("@cust_id", id)
+                   );
+    }
 
     public async Task<bool> StoreAsync(Cart cart, string table)
     {
         Cart? c = await FindByIdAsync(cart.Id, table);
-        string[] substrings = Regex.Split(table, "Carts");
-        string customershoptable = "Customers" + substrings[substrings.Length - 1];
-        Person? cust = await personDao.FindByIdAsync(cart.CustId, customershoptable);
-        //if (cust is not null)
-        //    await personDao.StoreAsync(cust, customershoptable);
+        
+        Person? cust = await personDao.FindByIdAsync(cart.CustId, "Customers");
+        
 
         if (c is null )
         {

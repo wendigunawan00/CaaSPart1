@@ -1,13 +1,16 @@
-﻿using CaaS.DTO;
+﻿using CaaS.Domain;
+using CaaS.DTO;
 
 namespace CaaS.Logic
 {
+    delegate bool isRuleFulfilled(OrderDetailsStatsDTO orderDetails);
     public class DiscountSystem
     { 
-        private readonly IDiscountRule Rule;
-        private readonly IDiscountAction Action;
+        private readonly List<IDiscountRule> Rule;
+        private readonly List<IDiscountAction> Action;
 
-        public DiscountSystem(IDiscountRule rule, IDiscountAction action)
+
+        public DiscountSystem(List<IDiscountRule> rule, List<IDiscountAction> action)
         {
             this.Rule = rule; 
             this.Action = action;
@@ -17,9 +20,15 @@ namespace CaaS.Logic
 
         public double executeDiscount(OrderDetailsStatsDTO orderDetails)
         {
-            if (this.Rule.isFulfilled(orderDetails))
+            double sum = orderDetails.UnitPrice;
+            double newPrice = 0;
+            for (int i = 0; i < Rule.Count; i++)
             {
-               return this.Action.calculateNewPrice(orderDetails.UnitPrice);
+                if (this.Rule[i].isFulfilled(orderDetails))
+                {
+                    newPrice= this.Action[i].calculateNewPrice(sum);
+                    sum = newPrice;
+                }
             }
             return orderDetails.UnitPrice; 
         }

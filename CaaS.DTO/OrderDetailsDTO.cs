@@ -10,9 +10,11 @@ public class OrderDetailsDTO
     public double UnitPrice { get; set; }
     public double Quantity { get; set; }
     public double Discount { get; set; }
+    public string ShopId { get; set; }
 
-    
+
 
     public override string ToString() =>
-      $"OrdersDetails(id:{Id}, OrderId:{OrderId}, ProductId:{ProductId}, UnitPrice:{UnitPrice}, Quantity:{Quantity})";
+      $"OrdersDetails(id:{Id}, OrderId:{OrderId}, ProductId:{ProductId}, " +
+     $"UnitPrice:{UnitPrice}, Quantity:{Quantity}, Discount:{Discount},Shop:{ShopId})";
 }

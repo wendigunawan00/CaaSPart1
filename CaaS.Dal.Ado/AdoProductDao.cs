@@ -8,25 +8,13 @@ using System;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
+public class AdoProductDao : AdoGenericDao<Product>, IBaseDao<Product>
 {
             
     public AdoProductDao(IConnectionFactory connectionFactory) : base(connectionFactory)
     {       
     }
 
-    public async Task<IEnumerable<Product>> FindAllAsync(string table)
-    {
-        return await base.template.QueryAsync($"select * from {table}", MapRowToProduct);
-    }
-
-    public async Task<Product?> FindByIdAsync(string id,string table)
-    {
-        return await base.template.QuerySingleAsync($"select * from {table} where product_id=@id",
-            MapRowToProduct,
-            new QueryParameter("@id", id));
-    }
-   
     public async Task<bool> UpdateAsync(Product product,string table)
     {
         Product? p = await FindByIdAsync(product.Id, table);
@@ -34,7 +22,7 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
         if (p is not null)
         {
             string sqlcmd = $"update {table} set product_name=@name, price = @price," +
-            $"amount_desc=@amountDesc, product_desc=@productDesc,download_link=@downloadLink  where product_id=@id";
+            $"amount_desc=@amountDesc, product_desc=@productDesc,download_link=@downloadLink,shop_id=@shopId where product_id=@id";
             // array für die Parameter erstellen
             return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", product.Id),
@@ -42,7 +30,8 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
                 new QueryParameter("@price", product.Price),
                 new QueryParameter("@amountDesc", product.AmountDesc),
                 new QueryParameter("@productDesc", product.ProductDesc),
-                new QueryParameter("@downloadLink", product.DownloadLink)
+                new QueryParameter("@downloadLink", product.DownloadLink),
+                new QueryParameter("@shopId", product.ShopId)
                 ) == 1;
         }
         return false;
@@ -67,8 +56,8 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
 
         if (p is null)
         {
-            string sqlcmd = $"insert into {table} (product_id,product_name, price, amount_desc, product_desc, download_link ) " +
-           "values (@id,@name, @price,@amountDesc,@productDesc,@downloadLink) ";
+            string sqlcmd = $"insert into {table} (product_id,product_name, price, amount_desc, product_desc, download_link, shop_id) " +
+           "values (@id,@name, @price,@amountDesc,@productDesc,@downloadLink,@shopId) ";
 
             return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", product.Id),
@@ -76,9 +65,16 @@ public class AdoProductDao : AdoBaseDao, IBaseDao<Product>
                 new QueryParameter("@price", product.Price),
                 new QueryParameter("@amountDesc", product.AmountDesc),
                 new QueryParameter("@productDesc", product.ProductDesc),
-                new QueryParameter("@downloadLink", product.DownloadLink)
+                new QueryParameter("@downloadLink", product.DownloadLink),
+                new QueryParameter("@shopId", product.ShopId)
                 ) == 1;
         }
         return await UpdateAsync(product, table);
+    }
+
+    public async Task<IEnumerable<Product?>>FindTByXAndY(string prodName, string prodDesc, string table)
+    {
+        string sqlcmd = $"select * from {table} where product_name like '%{prodName}%' or product_desc like '%{prodDesc}%' ";
+        return await base.template.QueryAsync(@sqlcmd, MapRowToProduct);
     }
 }

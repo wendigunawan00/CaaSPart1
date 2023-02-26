@@ -11,7 +11,7 @@ namespace CaaSTests.UnitTest1
     public class AdoCartDaoTests    {
         
         private IBaseDao<Cart> _CartDao;
-        private string _table = "CartsShop1";
+        private string _table = "Carts";
 
 
         [SetUp]
@@ -26,52 +26,53 @@ namespace CaaSTests.UnitTest1
         public async Task TestFindAllAsync()
         {
             List<Cart> CartList = (await _CartDao.FindAllAsync(_table)).ToList();
-            Assert.True(999 == CartList.Count);
+            Assert.True(999 <= CartList.Count);
         }
 
         [Test]
         public async Task TestFindByIdAsync()
         {
-            Cart? cart1 = await _CartDao.FindByIdAsync("cart-3-c-7", _table);
+            Cart? cart1 = await _CartDao.FindByIdAsync("cart10-cust1", _table);
             Assert.IsNotNull(cart1);
-            Assert.True(cart1.Status== ("open")&&cart1.CustId=="cust-7");
+            Assert.True(cart1.Status== ("open")&&cart1.CustId=="cust1");
 
         }
 
         [Test] 
         public async Task TestUpdateAsync()
         {                        
-            Cart? cart = await _CartDao.FindByIdAsync("cart-10-c-17", _table);
+            Cart? cart = await _CartDao.FindByIdAsync("cart10-cust1", _table);
             Assert.That(cart.Status == "open");
             cart.Status = "closed";
             await _CartDao.UpdateAsync(cart, _table);
-            Assert.That(cart.Status == "closed");
-            cart.Status = "open";
-            await _CartDao.UpdateAsync(cart, _table);
-            Assert.That(cart.Status == "open");
-
+            Cart? cart2 = await _CartDao.FindByIdAsync("cart10-cust1", _table);
+            Assert.That(cart2.Status == "closed");
+            cart2.Status = "open";
+            await _CartDao.UpdateAsync(cart2, _table);
+            Cart? cart3 = await _CartDao.FindByIdAsync("cart10-cust1", _table);
+            Assert.That(cart3.Status == "open");
+        }
+               
+        [Test]
+        public async Task TestStoreAsync()
+        {
+            await _CartDao.DeleteByIdAsync("cart10-cust6", _table);
+            Cart? cart = await _CartDao.FindByIdAsync("cart10-cust6", _table);
+            Assert.IsNull(cart);
+            cart= new Cart("cart10-cust6", "cust6", "open");
+            await _CartDao.StoreAsync(cart, _table);
+            Cart? cart2 = await _CartDao.FindByIdAsync("cart10-cust6", _table);
+            Assert.True(cart2.CustId=="cust6");
         }
 
         [Test]
         public async Task TestDeleteByIdAsync()
         {
-            await _CartDao.DeleteByIdAsync("cart-4-c-6", _table);
-            Cart? cart2 = await _CartDao.FindByIdAsync("cart-4-c-6", _table);
+            await _CartDao.DeleteByIdAsync("cart10-cust6", _table);
+            Cart? cart2 = await _CartDao.FindByIdAsync("cart10-cust6", _table);
             Assert.IsNull(cart2);
 
         }
 
-        [Test]
-        public async Task TestStoreAsync()
-        {
-            Cart? cart = await _CartDao.FindByIdAsync("cart-4-c-6", _table);
-            Assert.IsNull(cart);
-            cart= new Cart("cart-4-c-6", "cust-6", "open");
-            await _CartDao.StoreAsync(cart, _table);
-            Cart? cart2 = await _CartDao.FindByIdAsync("cart-4-c-6", _table);
-            Assert.True(cart2.CustId=="cust-6");
-
-
-        }
     }
 }

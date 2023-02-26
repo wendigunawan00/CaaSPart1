@@ -5,23 +5,11 @@ using static CaaS.Dal.Ado.AdoMapDao;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
+public class AdoAppKeyDao : AdoGenericDao<AppKey>,IBaseDao<AppKey>
 {
 
     public AdoAppKeyDao(IConnectionFactory connectionFactory): base(connectionFactory)
     {        
-    }
-
-    public async Task<IEnumerable<AppKey>> FindAllAsync(string table)
-    {
-        return await base.template.QueryAsync($"select * from {table}", MapRowToAppKey);
-    }
-
-    public async Task<AppKey?> FindByIdAsync(string id, string table)
-    {
-        return await base.template.QuerySingleAsync($"select * from {table} where app_key=@id",
-            MapRowToAppKey,
-            new QueryParameter("@id", id));
     }
 
     public async Task<bool> UpdateAsync(AppKey appKey, string table)
@@ -29,13 +17,14 @@ public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
         AppKey? apk = await FindByIdAsync(appKey.Id, table);
         if (apk is not null)
         {
-            string sqlcmd = $"update {table} set app_key_name=@appKeyName, app_key_password =@appKeyPassword" +
-                $" where app_key=@id";
+            string sqlcmd = $"update {table} set app_key_name=@appKeyName, app_key_password=@appKeyPassword," +
+                $" shop_id=@shopId where app_key=@id";
             // array für die Parameter erstellen
             return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", appKey.Id),
                 new QueryParameter("@appKeyName", appKey.AppKeyName), 
-                new QueryParameter("@appKeyPassword", appKey.AppKeyPassword)
+                new QueryParameter("@appKeyPassword", appKey.AppKeyPassword),
+                new QueryParameter("@shopId", appKey.ShopId)
                 ) == 1;
         }
         return false;
@@ -60,15 +49,23 @@ public class AdoAppKeyDao : AdoBaseDao,IBaseDao<AppKey>
         if (apk is null)
         {
             
-            string sqlcmd = $"insert into {table} (app_key,app_key_name,app_key_password) " +
-                $"values (@id,@appKeyName,@appKeyPassword)";
+            string sqlcmd = $"insert into {table} (app_key,app_key_name,app_key_password,shop_id) " +
+                $"values (@id,@appKeyName,@appKeyPassword,@shopId)";
             return await base.template.ExecuteAsync(@sqlcmd,
                 new QueryParameter("@id", appKey.Id),
                 new QueryParameter("@appKeyName", appKey.AppKeyName),
-                new QueryParameter("@appKeyPassword", appKey.AppKeyPassword)
+                new QueryParameter("@appKeyPassword", appKey.AppKeyPassword),
+                new QueryParameter("@shopId", appKey.ShopId)
                 ) == 1;
             
         }
         return await UpdateAsync(appKey, table);
+    }
+
+    public async Task<IEnumerable<AppKey?>> FindTByX(string appKeyName, string table)
+    {
+        string sqlcmd = $"select * from {table} where app_key_name= @appKeyName";
+        return await template.QueryAsync(@sqlcmd,MapRowToAppKey,
+            new QueryParameter("@appKeyName", appKeyName));
     }
 }

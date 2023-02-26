@@ -1,11 +1,21 @@
-﻿namespace CaaS.Dal.Interfaces;
+﻿using CaaS.Domain;
 
-public interface IBaseDao<T> : IDao
+namespace CaaS.Dal.Interfaces;
+
+public interface IBaseDao<T> : IGenericDao<T>
 {
-    Task<IEnumerable<T>> FindAllAsync(string table);
-    Task<T?> FindByIdAsync(string id, string table);
-
     Task<bool> UpdateAsync(T obj, string table);
     Task<bool> DeleteByIdAsync(string id, string table);
     Task<bool> StoreAsync(T obj, string table);
+
+    Task<IEnumerable<T?>> FindTByXAndY(string criteriaX, string criteriaY, string table)
+    {
+        return (Task<IEnumerable<T?>>)Enumerable.Empty<T>();
+    }
+
+    Task<IEnumerable<T?>> FindTByX(string criteriaX, string table)
+    {
+        return (Task<IEnumerable<T?>>)Enumerable.Empty<T>();
+    }
+    
 }

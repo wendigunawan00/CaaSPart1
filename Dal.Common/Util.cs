@@ -20,7 +20,7 @@ namespace Dal.Common
             return Activator.CreateInstance(classType, constructorParameters) as AdoTemplate;
         }
 
-        public static string createID(string lastID = "prod-1", int count =1)
+        public static string createID(string lastID = "newProd-1", long count =1)
         {
             //Method 1
             //Regex regex = new Regex("-");  // Split on hyphens.
@@ -35,9 +35,8 @@ namespace Dal.Common
             //Method 2
             string matches = Regex.Match(lastID, @"(?<![A-z\d])+\d+").Value;
             int matchPos = Regex.Match(lastID, @"(?<![A-z\d])+\d+").Index;
-
-            return lastID.Substring(0,matchPos) + (count + 1).ToString();
-           
+            return (matchPos==0)? $"newProd-{count+1}": 
+                lastID.Substring(0, matchPos) + (Int64.Parse(matches) + 1).ToString();
         }
     }
 }

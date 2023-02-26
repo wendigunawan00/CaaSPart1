@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CaaS.Domain;
 using CaaS.DTO;
+using static CaaS.Dal.Ado.AdoMapDao;
 using CaaS.Logic;
 using Dal.Common;
 using Microsoft.Extensions.Configuration;
@@ -9,28 +10,39 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using CaaS.Dal.Ado;
 
 namespace CaaS.Features
 {
     public class Auth : IAuth
     {
-        private readonly IManagementLogic<Shop> logicShop;
-        private readonly IManagementLogic<Person> logicPerson;
-        private readonly IManagementLogic<AppKey> logicAppKey;
-       
-        
+        private IMapper _mapper;
+        private readonly AdoPersonDao logicPerson;
+        private readonly AdoAppKeyDao logicAppKey;
+        private readonly string[] TenantAppKey;
 
-        public Auth(IManagementLogic<Shop> logicShop, IManagementLogic<Person> logicPerson,
-            IManagementLogic<AppKey> logicAppKey
-            )
+        public void setMapper(IMapper value)
         {
-            this.logicShop = logicShop ?? throw new ArgumentNullException(nameof(logicShop));
-            this.logicPerson = logicPerson ?? throw new ArgumentNullException(nameof(logicPerson));
-            this.logicAppKey = logicAppKey ?? throw new ArgumentNullException(nameof(logicAppKey));           
-            
+            _mapper = value;
         }
-        
-       
+
+        public Auth( AdoPersonDao logicPerson, AdoAppKeyDao logicAppKey, string[] TenantAppKey)
+        {           
+            this.logicPerson = logicPerson;
+            this.logicAppKey = logicAppKey;
+            this.TenantAppKey = TenantAppKey;
+        }
+
+        private async Task<PersonDTO?> GetAdminByEmail(string email)
+        {           
+            return _mapper.Map<PersonDTO>(await logicPerson.FindTByX(email, TenantAppKey[0]));
+        }
+
+        private async Task<AppKeyDTO?> GetAppKey(string appKeyName)
+        {
+            return _mapper.Map<AppKeyDTO>(await logicAppKey.FindTByX(appKeyName, TenantAppKey[1]));
+        }                
+
         private string GetToken(AdminDTO admin)
         {
             IConfiguration config = ConfigurationUtil.GetConfiguration();
@@ -54,22 +66,19 @@ namespace CaaS.Features
         }
         public async Task<string?> Authenticate(AdminDTO user)
         {
-            var mandant = (await logicPerson.Get()).Where(m=>m.Email.Equals(user.Email));
-            var appKey = (await logicAppKey.Get()).Where(ak => ak.AppKeyName.Equals(user.AppKeyName));
-            if(mandant.IsNullOrEmpty() || appKey.IsNullOrEmpty())
+            var mandant = await GetAdminByEmail(user.Email);                
+            var appKey = await GetAppKey(user.AppKeyName);
+            if(mandant is null || appKey is null)
             {
                 return null;
             }
-            var shops = (await logicShop.Get()).Where(s=>s.MandantId.Equals(mandant.First().Id) && s.AppKey.Equals(appKey.First().Id));
-            if (shops.IsNullOrEmpty())
+            if (mandant.Status.Equals(appKey.ShopId))
             {
-                return null;
+                return GetToken(user);           
             }
-            return GetToken(user);
-           
+
+            return null;
         }
-        
-       
-        
+      
     }
 }

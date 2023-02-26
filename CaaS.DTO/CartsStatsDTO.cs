@@ -3,6 +3,13 @@
 public class CartsStatsDTO
 {
     public double TotalOpenCart { get; set; }
+
+    public CartsStatsDTO(double totalOpenCart, double totalClosedCart)
+    {
+        TotalOpenCart = totalOpenCart;
+        TotalClosedCart = totalClosedCart;
+    }
+
     public double TotalClosedCart { get; set; }
 
 

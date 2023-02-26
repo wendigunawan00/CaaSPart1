@@ -1,12 +1,12 @@
 ﻿using CaaS.DTO;
 using AutoMapper;
-
+using CaaS.Domain;
 
 namespace CaaS.Features
 {
     public interface IAuth
     {
-        public Task<string?> Authenticate(AdminDTO user);
-
+       Task<string?> Authenticate(AdminDTO user);
+       public void setMapper(IMapper mapper);
     }
 }

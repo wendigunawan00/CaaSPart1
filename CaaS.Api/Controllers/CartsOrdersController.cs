@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using CaaS.Logic;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using CaaS.Domain;
 
 namespace CaaS.Api.Controllers
 {
@@ -22,13 +23,31 @@ namespace CaaS.Api.Controllers
             orderMgtLogic.setMapper(mapper ?? throw new ArgumentNullException(nameof(mapper)));
             this.mapper = mapper;
         }
+        /// <summary>
+        /// Delete a product with the product-id given
+        /// </summary>
+        [HttpDelete("{custId}")]
+        //[Authorize]
+        public async Task<ActionResult> EmptyCartByCustId([FromRoute] string custId)
+        {
+            var opencart = orderMgtLogic.ShowOpenCartByCustomerID(custId);
 
-        
+            if (opencart is not null) {
+                await orderMgtLogic.DeleteCartDetailsByCartId(opencart.Result.Id); 
+
+                return Ok("Finished Deleting");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         /// <summary>
         /// Returns all open carts all customers.
         /// <returns> all carts with open status</returns>
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IEnumerable<CartDTO>> ShowOpenCart()
         {
             return await orderMgtLogic.ShowOpenCart();
@@ -40,34 +59,35 @@ namespace CaaS.Api.Controllers
         /// <returns>an open cart of a customer</returns>
         [Route("[action]")]
         [HttpPost]
-        public async Task<ActionResult<CartDTO>> CreateOrUpdateCart(string customerId, string productId, double quantity)
+        public async Task<ActionResult<CartDetailsDTO>> CreateOrUpdateCart(string customerId, string productId, double quantity)
         {
-            var cart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
-            
-            if (cart.IsNullOrEmpty())
+            if(await orderMgtLogic.isValidProduct(productId) is null || await orderMgtLogic.isValidCustomer(customerId)is null)
+            {
+                return NotFound("Wrong product Id or customer Id");
+            }
+            var cart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId); // return only 1 element
+            if (cart is null ) // if a customer has no open cart then create a new cart for this customer
             {
                 await orderMgtLogic.CreateCart(customerId);
-                var newCart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
-                await orderMgtLogic.CreateCartDetails((newCart).ToArray().ElementAt(0).Id, productId, quantity);
-                return mapper.Map<CartDTO>((newCart).ToArray().ElementAt(0));
+                var newCart1 = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
+                var cartDetails= await orderMgtLogic.CreateCartDetails((newCart1).Id, productId, quantity);
+                return mapper.Map<CartDetailsDTO>(cartDetails);
 
             }
-            else //updating
+            else //if a customer has an open cart then update the cart-details or create a new cart-details
             {
-                var openCart = (cart).ToArray().ElementAt(0);
-                var cartDetails = await orderMgtLogic.ShowOpenCartDetailsByProductId(openCart.Id, productId);
-                var openCartDetails = (cartDetails).ToArray().ElementAt(0);
+                var cartDetails = await orderMgtLogic.ShowOpenCartDetailsByCartIdAndProductId(cart.Id, productId);
 
-                if (cartDetails.IsNullOrEmpty())
+                if (cartDetails is not null)
                 {
-                    openCartDetails!.Quantity = quantity;
-                    await orderMgtLogic.UpdateCartDetails(openCartDetails);
+                    cartDetails.Quantity = quantity;
+                    await orderMgtLogic.UpdateCartDetails(cartDetails);
                 }
                 else
                 {
-                    await orderMgtLogic.CreateCartDetails(openCartDetails.Id, productId, quantity);
+                    cartDetails= await orderMgtLogic.CreateCartDetails(cart.Id, productId, quantity);
                 }
-                 return mapper.Map<CartDTO>(openCartDetails);
+                 return mapper.Map<CartDetailsDTO>(cartDetails);
             }
         }
 
@@ -77,24 +97,38 @@ namespace CaaS.Api.Controllers
         /// <returns>create an order out of an open cart of a customer</returns>
         [Route("[action]")]
         [HttpPost]
-        public async Task<ActionResult<OrderDetailsDTO?>> CreateOrder(string customerId, double discount)
+        public async Task<ActionResult<OrderDetailsDTO?>> CreateOrder(string customerId, double discount, MinimumOrderRules minOrderRule, FixDiscount fixDiscAction, PeriodeRules periodeRules, PercentageDiscount percDiscAction)
         {
-            var openCart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
-           
-            if (!openCart.IsNullOrEmpty())
+            if (await orderMgtLogic.isValidCustomer(customerId) is null)
             {
-            var openCartDetails = (await orderMgtLogic.ShowOpenCartDetailsByCartId((openCart).ToArray().ElementAt(0).Id));
-                for (int i = 0; i < openCartDetails.Count(); i++)
+                return NotFound("Wrong customer Id");
+            }
+
+            var openCart = await orderMgtLogic.ShowOpenCartByCustomerID(customerId);
+            var someDiscRules = new List<IDiscountRule>();
+            someDiscRules.Add(minOrderRule);
+            someDiscRules.Add(periodeRules);
+            var someDiscActions = new List<IDiscountAction>();
+            someDiscActions.Add(fixDiscAction);
+            someDiscActions.Add(percDiscAction);
+            if (openCart is not null) // if openCart not empty
+            {
+                var openCartDetails = (await orderMgtLogic.ShowOpenCartDetailsByCartId((openCart).Id));
+                if (openCartDetails.IsNullOrEmpty()) // if openCartDetails is not empty
                 {
-                    CartDetailsDTO? openCartDetails1 = openCartDetails!.ToArray().ElementAt(i);
-                    var ok = await orderMgtLogic.CreateOrder((openCart).ToArray().ElementAt(0), openCartDetails1, discount);
-                    if (i == openCartDetails.Count()-1)
+                    for (int i = 0; i < openCartDetails.Count(); i++)
                     {
-                        return Ok(ok);
+                        CartDetailsDTO openCartDetails1 = openCartDetails.ToArray().ElementAt(i);
+                        var ok = await orderMgtLogic.CreateOrder((openCart), openCartDetails1, discount, someDiscRules, someDiscActions);
+                        if (i == openCartDetails.Count() - 1)
+                        {
+                            return Ok(ok);
+                        }
                     }
                 }
             }            
-            return NotFound(StatusInfo.InvalidOrderId((openCart).ToArray().ElementAt(0).Id.Replace("cart", "or")));
+            //return NotFound(StatusInfo.InvalidOrderId((openCart).ToArray().ElementAt(0).Id.Replace("cart", "or")));
+            return NotFound("No Open cart for this customer");
             
         }
 

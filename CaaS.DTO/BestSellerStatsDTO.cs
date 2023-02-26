@@ -1,16 +1,20 @@
-﻿namespace CaaS.DTO;
+﻿using System.Data;
+
+namespace CaaS.DTO;
 
 public class BestSellerStatsDTO
 {
-    public string ProductId { get; set; }
-    public double TotalQuantity { get;  set; }
 
-    //public BestSellerStatsDTO( string prodId, double quantity)
-    //{
-    //    ProductId = prodId;
-    //    TotalQuantity = quantity;
-    //}
+    public BestSellerStatsDTO(string id, double totalQuantity)
+    {
+        this.Id = id;
+        this.TotalQuantity = totalQuantity;
+    }
+
+    public string Id { get; set; }
+    public double TotalQuantity { get; set; }
+
+
     public override string ToString() =>
-      $"BestSellerStats(ProducId:{ProductId}, Quantity:{TotalQuantity})";
+      $"BestSellerStats(ProductId:{Id}, Quantity:{TotalQuantity})";
 }
-

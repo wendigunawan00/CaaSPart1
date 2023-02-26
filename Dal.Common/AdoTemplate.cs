@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dal.Common;
 
@@ -90,7 +86,18 @@ public class AdoTemplate
         await using DbCommand command = connection.CreateCommand();
         command.CommandText = sql;
         AddParameters(command, parameters);
-
+        
         return await command.ExecuteNonQueryAsync();
     }
+    
+    public async Task<int> ExecuteCountAsync(string sql, params QueryParameter[] parameters)
+    {
+        await using DbConnection connection = await connectionFactory.CreateConnectionAsync();
+        await using DbCommand command = connection.CreateCommand();
+        command.CommandText = sql;
+        AddParameters(command, parameters);
+
+        return (int)await command.ExecuteScalarAsync();
+    }
+    
 }

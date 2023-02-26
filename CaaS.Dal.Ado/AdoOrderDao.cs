@@ -6,22 +6,10 @@ using static CaaS.Dal.Ado.AdoMapDao;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoOrderDao : AdoBaseDao,IBaseDao<Order>
+public class AdoOrderDao : AdoGenericDao<Order>,IBaseDao<Order>
 {            
     public AdoOrderDao(IConnectionFactory connectionFactory) : base(connectionFactory)
     {        
-    }
-
-    public async Task<IEnumerable<Order>> FindAllAsync(string table)
-    {
-        return await base.template.QueryAsync($"select * from {table}", MapRowToOrder);
-    }
-
-    public async Task<Order?> FindByIdAsync(string id,string table)
-    {
-        return await base.template.QuerySingleAsync($"select * from {table} where order_id=@id",
-            MapRowToOrder,
-            new QueryParameter("@id", id));
     }
 
     public async Task<bool> UpdateAsync(Order order,string table)
@@ -61,7 +49,7 @@ public class AdoOrderDao : AdoBaseDao,IBaseDao<Order>
         if (o is null)
         {
             string sqlcmd = $"insert into {table} ( order_id,cust_id, cart_id, order_date) " +
-            "values (@id,@custId, @cartId,@order_date) ";
+            "values (@id,@custId, @cartId,@order_date)";
             //string[] substrings = Regex.Split(table, "Orders");
             //string customershoptable = "Customers"+substrings[substrings.Length - 1];
             //string cartshoptable = "Carts"+substrings[substrings.Length - 1];

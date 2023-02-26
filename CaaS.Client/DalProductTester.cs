@@ -10,7 +10,7 @@ internal class DalProductTester
 
     // null prüfen
     private readonly IBaseDao<Product> ProductDao;
-    private readonly string table ="ProductShop1";
+    private readonly string table ="Products";
     private readonly string id1="arz-1";
     private readonly string id2="arz-2";
 
@@ -72,7 +72,7 @@ internal class DalProductTester
         Console.WriteLine($"before storing: Product -> {product?.ToString() ?? "<null>"}");
         if (product == null)
         {
-            product = new Product(id2, "(BAXTER) GLUCOSE 10% w/v ***", 11, "250 ml x 30 Viaflo Bags", "not yet", "download-link");
+            product = new Product(id2, "(BAXTER) GLUCOSE 10% w/v ***", 11, "250 ml x 30 Viaflo Bags", "not yet", "download-link","sh1");
             await ProductDao.StoreAsync(product, table);
         }
         product = await ProductDao.FindByIdAsync(id2, table);

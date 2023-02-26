@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
+public class AdoOrderDetailsDao : AdoGenericDao<OrderDetails>,IBaseDao<OrderDetails>
 {
        
     public AdoOrderDetailsDao(IConnectionFactory connectionFactory): base(connectionFactory)
@@ -17,18 +17,6 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
         //this.template = new AdoTemplate(connectionFactory);        
     }
 
-    public async Task<IEnumerable<OrderDetails>> FindAllAsync(string table)
-    {
-        return await base.template.QueryAsync($"select * from {table}", MapRowToOrderDetails);
-    }
-
-    public async Task<OrderDetails?> FindByIdAsync(string id,string table)
-    {
-        return await base.template.QuerySingleAsync($"select * from {table} where order_details_id=@id",
-            MapRowToOrderDetails,
-            new QueryParameter("@id", id))??null;
-    }
-   
     public async Task<bool> UpdateAsync(OrderDetails orderdetails,string table)
     {
         OrderDetails? o = await FindByIdAsync(orderdetails.Id, table);
@@ -69,8 +57,8 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
 
         if (od is null)
         {
-            string sqlcmd = $"insert into {table} (order_details_id,order_id, product_id,unit_price,qty,discount) " +
-           "values (@id,@orderId, @productId,@unitPrice, @quantity,@discount) ";
+            string sqlcmd = $"insert into {table} (order_details_id,order_id, product_id,unit_price,qty,discount,shop_id) " +
+           "values (@id,@orderId, @productId,@unitPrice, @quantity,@discount,@shopId) ";
             //string[] substrings = Regex.Split(table, "OrdersDetails");
             //string ordersshoptable = "Orders" + substrings[substrings.Length - 1];
             //string productshoptable = "Products" + substrings[substrings.Length - 1];
@@ -86,9 +74,12 @@ public class AdoOrderDetailsDao : AdoBaseDao,IBaseDao<OrderDetails>
                 new QueryParameter("@productId", orderdetails.ProductId),
                 new QueryParameter("@unitPrice", orderdetails.UnitPrice),
                 new QueryParameter("@quantity", orderdetails.Quantity),
-                new QueryParameter("@discount", orderdetails.Discount)
+                new QueryParameter("@discount", orderdetails.Discount),
+                new QueryParameter("@shopId", orderdetails.ShopId)
                 ) == 1;
         }
         return await UpdateAsync(orderdetails, table);
     }
+
+    
 }

@@ -5,25 +5,13 @@ using static CaaS.Dal.Ado.AdoMapDao;
 
 namespace CaaS.Dal.Ado;
 
-public class AdoAddressDao : AdoBaseDao, IBaseDao<Address>
+public class AdoAddressDao : AdoGenericDao<Address>, IBaseDao<Address>
 {
 
     public AdoAddressDao(IConnectionFactory connectionFactory):base(connectionFactory)
     {      
     }
-
-    public async Task<IEnumerable<Address>> FindAllAsync(string table)
-    {
-        return await base.template.QueryAsync($"select * from {table}", MapRowToAddress);
-    }
-
-    public async Task<Address?> FindByIdAsync(string id, string table)
-    {
-        return await base.template.QuerySingleAsync($"select * from {table} where address_id=@id",
-            MapRowToAddress,
-            new QueryParameter("@id", id));
-    }
-
+    
     public async Task<bool> UpdateAsync(Address address, string table)
     {
         Address? addr = await FindByIdAsync(address.Id, table);

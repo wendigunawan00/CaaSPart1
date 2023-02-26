@@ -1,0 +1,4 @@
+{
+  "email": "andrewlevis@example.com",
+  "appKeyName": "buffalo"
+}

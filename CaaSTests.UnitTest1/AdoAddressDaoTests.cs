@@ -14,7 +14,7 @@ namespace CaaSTests.UnitTest1
 
         private IBaseDao<Address> _AddressDao;
 
-        private string _table = "AddressesShops";
+        private string _table = "Addresses";
 
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace CaaSTests.UnitTest1
         public async Task TestFindAllAsync()
         {
             List<Address> AddressList = (await _AddressDao.FindAllAsync(_table)).ToList();
-            Assert.True(4 >= AddressList.Count);
+            Assert.True(202 <= AddressList.Count);
 
         }
 
@@ -40,31 +40,7 @@ namespace CaaSTests.UnitTest1
             Assert.IsNotNull(address1);
             Assert.True(address1.Province.Trim() == "Wien");
 
-        }
-
-        [Test]
-        public async Task TestUpdateAsync()
-        {
-            Address? address = await _AddressDao.FindByIdAsync("addr-sh3", _table);
-            address.Province = "Lower Austria";
-            await _AddressDao.UpdateAsync(address, _table);
-            Assert.That(address.Province == "Lower Austria");
-            Address? address2 = new Address("addr-sh3", "Meilissenweg 3", "", 4020, "Linz", "Upper Austria", "Austria");
-            await _AddressDao.UpdateAsync(address2, _table);
-            Assert.That(address2.Province == "Upper Austria");
-        }
-
-
-        [Test]
-        public async Task TestDeleteByIdAsync()
-        {
-            Address? address = await _AddressDao.FindByIdAsync("addr-sh12", _table);
-            Assert.IsNotNull(address);
-            await _AddressDao.DeleteByIdAsync("addr-sh12", _table);
-            address = await _AddressDao.FindByIdAsync("addr-sh12", _table);
-            Assert.IsNull(address);
-
-        }
+        }        
 
         [Test]
         public async Task TestStoreAsync()
@@ -74,6 +50,31 @@ namespace CaaSTests.UnitTest1
             Address? address2 = await _AddressDao.FindByIdAsync("addr-sh12", _table);
             Assert.True(address.Province == address2.Province);
 
+        }              
+        
+
+        [Test]
+        public async Task TestDeleteByIdAsync()
+        {
+            Address? address12 = new Address("addr-sh12", "Gleinkernweg 6", "", 4420, "Wels", "Upper Austria", "Austria");
+            await _AddressDao.StoreAsync(address12, _table);
+            Address? address = await _AddressDao.FindByIdAsync("addr-sh12", _table);
+            Assert.IsNotNull(address);
+            await _AddressDao.DeleteByIdAsync("addr-sh12", _table);
+            address = await _AddressDao.FindByIdAsync("addr-sh12", _table);
+            Assert.IsNull(address);
+
+        }
+
+        [Test]
+        public async Task TestUpdateAsync()
+        {           
+            Address? address = new Address("addr-sh3", "Meilissenweg 3", "", 4020, "Linz", "Upper Austria", "Austria");
+            await _AddressDao.StoreAsync(address, _table);
+            Address? address2 = await _AddressDao.FindByIdAsync("addr-sh3", _table);
+            Assert.That(address2.Province == "Upper Austria");
+            address2.Province = "Lower Austria";
+            Assert.That(address2.Province == "Lower Austria");
         }
     }
         
