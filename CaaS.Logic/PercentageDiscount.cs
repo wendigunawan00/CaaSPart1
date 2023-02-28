@@ -2,16 +2,16 @@
 {
     public class PercentageDiscount:IDiscountAction
     {
-        public double Rate { get; set; }
+        public double PercentageRate { get; set; }
         
 
         public double calculateNewPrice(double Price)
         {
-            if(Rate > 1 || Rate<0)
+            if(PercentageRate > 1 || PercentageRate<0)
             {
                 return Price;
             }
-            return Price - Rate * Price;
+            return Price - PercentageRate * Price;
         }
     }
 

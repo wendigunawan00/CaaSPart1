@@ -50,16 +50,16 @@ namespace CaaS.Logic
         {
             return _mapper.Map<PersonDTO>(await logicPerson.FindByIdAsync(custId, cartOrderProductCartDetOrderDetPerson[5]));
         }
-        public async Task<IEnumerable<CartDTO>> ShowOpenCart()
+        public async Task<IEnumerable<CartDTO?>> ShowOpenCart()
         {
             var carts = await logicCart.FindTByStatus("open", cartOrderProductCartDetOrderDetPerson[0]);
             return _mapper.Map <IEnumerable <CartDTO>>( carts )?? Enumerable.Empty<CartDTO>();
         }
 
-        public async Task<CartDTO?> ShowOpenCartByCustomerID(string customerId)
+        public async Task<IEnumerable<CartDTO?>> ShowOpenCartByCustomerID(string customerId)
         {
-            var carts = await logicCart.FindTByStatusAndId("open",customerId, cartOrderProductCartDetOrderDetPerson[0]);            
-            return _mapper.Map<CartDTO>(carts)?? null ;
+            var carts = (await logicCart.FindTByXAndY("open",customerId, cartOrderProductCartDetOrderDetPerson[0]));            
+            return _mapper.Map<IEnumerable<CartDTO?>>(carts) ;
         }
         
         public async Task<CartDetailsDTO?> ShowOpenCartDetailsByCartIdAndProductId(string openCartId, string productId)
@@ -89,27 +89,28 @@ namespace CaaS.Logic
             return (await logicCartDetails.DeleteCartDetailsByCartId(cartId, cartOrderProductCartDetOrderDetPerson[3]));
         }
                
-        public async Task<CartDetailsDTO> UpdateCartDetails(CartDetailsDTO cartDetailsToBeUpdated)
+        public async Task<bool> UpdateCartDetails(CartDetailsDTO cartDetailsToBeUpdated)
         {
-            bool success= await logicCartDetails.UpdateAsync(_mapper.Map<CartDetails>(cartDetailsToBeUpdated), cartOrderProductCartDetOrderDetPerson[3]);
-            return _mapper.Map<CartDetailsDTO >( cartDetailsToBeUpdated);
+            return await logicCartDetails.UpdateAsync(_mapper.Map<CartDetails>(cartDetailsToBeUpdated), cartOrderProductCartDetOrderDetPerson[3]);
         }                
 
         public async Task<OrderDetailsDTO> CreateOrder(CartDTO openCart, CartDetailsDTO openCartDetails, double discount, List<IDiscountRule> discountRules, List<IDiscountAction> discountActions )
-        {
-            
+        {            
             openCart.Status = "closed";
             var newOrderId = openCart.Id.Replace("cart", "ord");
             await logicCart.UpdateAsync(_mapper.Map<Cart>(openCart), cartOrderProductCartDetOrderDetPerson[0]);
             var newOrder = new Order(newOrderId, openCart.CustId, openCart.Id, DateTime.Now);
             await logicOrder.StoreAsync(newOrder, cartOrderProductCartDetOrderDetPerson[1]);
             var product = await logicProduct.FindByIdAsync(openCartDetails.ProductId, cartOrderProductCartDetOrderDetPerson[2]);
-            var newOrderDetails = new OrderDetails(openCartDetails.Id.Replace("cart", "ord"), newOrderId, openCartDetails.ProductId, product!.Price, openCartDetails.Quantity, discount,product.ShopId);
+            var newOrderDetails = new OrderDetails(openCartDetails.Id.Replace("cart", "ord"), newOrderId, openCartDetails.ProductId,
+                product!.Price, openCartDetails.Quantity, discount,product.ShopId);
             var discountSystem = new DiscountSystem(discountRules,discountActions);
             
-            newOrderDetails.UnitPrice = discountSystem.executeDiscount(new OrderDetailsStatsDTO(newOrderDetails.Id,
+            var newUnitPrice = discountSystem.executeDiscount(new OrderDetailsStatsDTO(newOrderDetails.Id,
                 newOrderDetails.OrderId,newOrderDetails.ProductId,newOrderDetails.UnitPrice,newOrderDetails.Quantity,
                 newOrderDetails.Discount,openCart.CustId,openCart.Id,DateTime.Now));
+            newOrderDetails.Discount = newOrderDetails.UnitPrice - newUnitPrice;
+            newOrderDetails.UnitPrice = newUnitPrice;
             await logicOrderDetails.StoreAsync(newOrderDetails, cartOrderProductCartDetOrderDetPerson[4]);
             return _mapper.Map<OrderDetailsDTO>(newOrderDetails);                        
         }

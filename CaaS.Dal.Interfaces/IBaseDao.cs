@@ -13,9 +13,6 @@ public interface IBaseDao<T> : IGenericDao<T>
         return (Task<IEnumerable<T?>>)Enumerable.Empty<T>();
     }
 
-    Task<IEnumerable<T?>> FindTByX(string criteriaX, string table)
-    {
-        return (Task<IEnumerable<T?>>)Enumerable.Empty<T>();
-    }
+    
     
 }

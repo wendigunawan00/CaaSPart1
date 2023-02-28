@@ -83,13 +83,12 @@ namespace CaaS.Api.Controllers
         /// </summary>
         [HttpPost]
         //[Authorize]
-        public async Task<ActionResult<ProductDTO>> CreateProduct([FromBody] ProductForCreationDTO productDTO)
+        public async Task<ActionResult<ProductDTO>> CreateProduct([FromBody] ProductDTO productDTO)
         {         
-            Domain.Product product = mapper.Map<Domain.Product>(productDTO);
-            var productDTO2 = await logic.GetLast();
-            var count = await logic.CountAll();
-       
-            product.Id = Util.createID(productDTO2!.Id,count);
+            var count = await logic.CountAll();       
+           
+            Domain.Product product = new Product(productDTO.Id,productDTO.Name,productDTO.Price,productDTO.AmountDesc,
+                productDTO.ProductDesc,productDTO.DownloadLink,productDTO.ShopId);
             await logic.Add(product);
             return CreatedAtAction(actionName: nameof(GetProductById),
                 routeValues: new { ProductId = product.Id },
@@ -103,9 +102,9 @@ namespace CaaS.Api.Controllers
         /// </summary>
         [HttpPut("{productId}")]
         //[Authorize]
-        public async Task<ActionResult<ProductDTO>> UpdateProduct(String productId,[FromBody] ProductForCreationDTO productDTO)
+        public async Task<ActionResult<ProductDTO>> UpdateProduct(string productId,[FromBody] ProductDTO productDTO)
         {
-            Domain.Product? product = (Product?) await logic.Search(productId);
+            Domain.Product? product =  await logic.Search(productId);
             if (product is null) {
                 return NotFound();
             }

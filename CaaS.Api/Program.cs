@@ -43,6 +43,9 @@ builder.Services.AddScoped<IManagementLogic<Product>>(_ =>
 builder.Services.AddScoped<IManagementLogic<Person>>(_ =>
     new ManagementLogic<Person>(new AdoPersonDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "Customers")
 );
+builder.Services.AddScoped<IManagementLogic<Address>>(_ =>    
+    new ManagementLogic<Address>(new AdoAddressDao(DefaultConnectionFactory.FromConfiguration(ConfigurationUtil.GetConfiguration(), "CaaSDbConnection")), "Addresses")
+);
 
 builder.Services.AddScoped<IAnalytic>(_ =>
     new StatsAnalytic(

@@ -56,13 +56,14 @@ public class AdoCartDao : AdoGenericDao<Cart>,IBaseDao<Cart>
         return newCart;
     } 
     
-    public async Task<IEnumerable<Cart>> FindTByStatusAndId(string status, string id, string table)
+    public async Task<IEnumerable<Cart?>> FindTByXAndY(string status, string custId, string table)
     {
         string sqlcmd = $"select * from {table} where status = @status And cust_id=@cust_id";
         return await base.template.QueryAsync(@sqlcmd,MapRowToCart,
                    new QueryParameter("@status", status),
-                   new QueryParameter("@cust_id", id)
+                   new QueryParameter("@cust_id", custId)
                    );
+        
     }
 
     public async Task<bool> StoreAsync(Cart cart, string table)

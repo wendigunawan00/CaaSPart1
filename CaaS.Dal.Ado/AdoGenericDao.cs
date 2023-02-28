@@ -82,12 +82,13 @@ public class AdoGenericDao<T> : IGenericDao<T>
             domainIdDict.TryGetValue(typeof(T), out domainId))
         {
             var MapRowToT = (RowMapper<T>)domainMapper;
-            return await template.QuerySingleAsync(@$"select Top (1) * from {table} Order By {domainId} Desc", MapRowToT);
+            return await template.QuerySingleAsync(@$"select * from {table} where {domainId}=(SELECT max({domainId}) FROM {table})"
+                , MapRowToT);
         }
         return default;
     }
 
-    public async Task<IEnumerable<T>> FindTByShopId(string shopId, string table)
+    public async Task<IEnumerable<T?>> FindTByX(string shopId, string table)
     {
         Delegate domainMapper;
         if (domainMapperDict.TryGetValue(typeof(T), out domainMapper))

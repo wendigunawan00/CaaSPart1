@@ -22,9 +22,10 @@ namespace CaaS.Api.Controllers
         private readonly IMapper mapper;
 
 
-        public CustomersController(IManagementLogic<Person> logic, IMapper mapper)
+        public CustomersController(IManagementLogic<Person> logic, IManagementLogic<Address> logicAddress, IMapper mapper)
         {           
             this.logic = logic ?? throw new ArgumentNullException(nameof(logic));
+            this.logicAddress = logicAddress ?? throw new ArgumentNullException(nameof(logic)); 
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
                 
@@ -69,15 +70,21 @@ namespace CaaS.Api.Controllers
         /// </summary>
         [HttpPost]
         //[Authorize]
-        public async Task<ActionResult<PersonDTO>> CreatePerson([FromBody] PersonForCreationDTO PersonDTO, [FromBody] AddressForCreationDTO AddressDTO)
-        {         
-            Domain.Person Person = mapper.Map<Domain.Person>(PersonDTO);
-            Domain.Address newAddress = mapper.Map<Domain.Address>(AddressDTO);
-            var count = await logic.CountAll();
+        public async Task<ActionResult<PersonDTO>> CreatePerson([FromBody] PersonAddressForCreationDTO PersonAddressDTO)
+        {
+            IEnumerable<Domain.Person?> foundPerson = await logic.GetTByX(PersonAddressDTO.Email);
+
+            if (!foundPerson.IsNullOrEmpty())
+            {
+                return NoContent();
+            }
        
-            Person.Id = $"cust{count+1}";
-            Person.AddressId = $"addr-cust{count+1}";
-            newAddress.Id = Person.AddressId;
+            var count = await logic.CountAll();            
+            Domain.Person Person = (new Person($"cust{count + 1}",PersonAddressDTO.FirstName, PersonAddressDTO.LastName,
+                PersonAddressDTO.DateOfBirth,PersonAddressDTO.Email, $"addr-cust{count + 1}", "active", PersonAddressDTO.Password));
+            Domain.Address newAddress = 
+                new Address($"addr-cust{count + 1}",PersonAddressDTO.Street, PersonAddressDTO.Floor,
+                PersonAddressDTO.PostalCode, PersonAddressDTO.City, PersonAddressDTO.Province,PersonAddressDTO.Country) ;
             await logic.Add(Person);
             await logicAddress.Add(newAddress);
             return CreatedAtAction(actionName: nameof(GetPersonById),
@@ -92,19 +99,22 @@ namespace CaaS.Api.Controllers
         /// </summary>
         [HttpPut("{PersonId}")]
         //[Authorize]
-        public async Task<ActionResult<PersonDTO>> UpdatePerson(string PersonId,[FromBody] PersonDTO PersonDTO, [FromBody] AddressDTO newAddressDTO)
+        public async Task<ActionResult<PersonDTO>> UpdatePerson(string PersonId,[FromBody] PersonAddressForUpdateDTO PersonAddressDTO)
         {
-            Domain.Person? Person = (Person?) await logic.Search(PersonId);
+            Domain.Person? foundPerson = (Person?) await logic.Search(PersonId);
 
-            if (Person is null) {
-                return NotFound();
+            if (foundPerson is null) {
+                return NotFound(StatusInfo.InvalidPersonId(PersonId));
             }
-            Domain.Address newAddress = mapper.Map<Domain.Address>(newAddressDTO);
 
-            mapper.Map(PersonDTO,Person);
+            foundPerson = new Person(PersonId,PersonAddressDTO.FirstName, PersonAddressDTO.LastName,
+               PersonAddressDTO.DateOfBirth, PersonAddressDTO.Email,foundPerson.AddressId, PersonAddressDTO.Status, PersonAddressDTO.Password);
+            Domain.Address newAddress = new Address(foundPerson.AddressId,PersonAddressDTO.Street, PersonAddressDTO.Floor,
+                PersonAddressDTO.PostalCode, PersonAddressDTO.City, PersonAddressDTO.Province, PersonAddressDTO.Country);
 
-            await logic.Update(Person);
-            await logicAddress.Add(newAddress);
+
+            await logic.Update(foundPerson);
+            await logicAddress.Update(newAddress);
 
             return Ok("Finished Updating");
         }
@@ -115,7 +125,7 @@ namespace CaaS.Api.Controllers
         /// </summary>
         [HttpDelete("{PersonId}")]
         //[Authorize]
-        public async Task<ActionResult> DeletePerson([FromRoute] String PersonId)
+        public async Task<ActionResult> DeletePerson([FromRoute] string PersonId)
         {
             if (await logic.Delete(PersonId))
             {

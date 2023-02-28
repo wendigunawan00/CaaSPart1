@@ -30,7 +30,7 @@ namespace CaaS.Logic
                     sum = newPrice;
                 }
             }
-            return orderDetails.UnitPrice; 
+            return sum; 
         }
     }
 

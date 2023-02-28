@@ -3,6 +3,16 @@
 public class CartDetailsDTO
 {
     public string Id { get; set; }
+
+    public CartDetailsDTO(string id, string cartId, string productId, double quantity, string shopId)
+    {
+        Id = id;
+        CartId = cartId;
+        ProductId = productId;
+        Quantity = quantity;
+        ShopId = shopId;
+    }
+
     public string CartId { get; set; }
     public string ProductId { get; set; }
     public double Quantity { get; set; }

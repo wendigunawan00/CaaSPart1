@@ -4,10 +4,11 @@ using CaaS.Domain;
 
 namespace CaaS.Logic
 {
-    public class ManagementLogic<T> : IManagementLogic<T> 
+    public class ManagementLogic<T> : IManagementLogic<T>
     {
-        private readonly IBaseDao<T> baseDao; 
+        private readonly IBaseDao<T> baseDao;
         private string table;
+
 
         public ManagementLogic(IBaseDao<T> baseDao,string DBTableName)
         {
@@ -51,12 +52,12 @@ namespace CaaS.Logic
                 
         public async Task<IEnumerable<T>> GetTByShopId(string shopId)
         {
-            return (IEnumerable<T>)await baseDao.FindTByShopId(shopId,table);
+            return (IEnumerable<T>)await baseDao.FindTByX(shopId,table);
         } 
         
         public async Task<IEnumerable<T>> GetTByX(string criteriaX)
         {
-            return (IEnumerable<T>)await baseDao.FindTByShopId(criteriaX,table);
+            return (IEnumerable<T>)await baseDao.FindTByX(criteriaX,table);
         }
 
         public async Task<IEnumerable<T>> GetTByXAndY(string Name, string Description)

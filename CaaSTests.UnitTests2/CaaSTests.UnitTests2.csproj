@@ -21,6 +21,7 @@
 	<ProjectReference Include="..\CaaS.Dal.Ado\CaaS.Dal.Ado.csproj" />
     <ProjectReference Include="..\CaaS.Dal.Interfaces\CaaS.Dal.Interfaces.csproj" />
 	<ProjectReference Include="..\CaaS.Domain\CaaS.Domain.csproj" />
+	<ProjectReference Include="..\CaaS.Logic\CaaS.Logic.csproj" />
 	<ProjectReference Include="..\Dal.Common\Dal.Common.csproj" />
   </ItemGroup>
 
